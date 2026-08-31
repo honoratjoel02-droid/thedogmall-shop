@@ -5,6 +5,7 @@ import { Menu, ShoppingCart, X } from "lucide-react";
 import { useCart } from "../../hooks/useCart";
 import { buttonVariants } from "../ui/button";
 import { cn } from "../../lib/utils";
+import Logo from "./Logo";
 
 const navItems = [
   { label: "Accueil", path: "/", end: true },
@@ -28,13 +29,8 @@ export default function SiteHeader() {
     <>
       <header className="sticky top-0 z-40 border-b border-border bg-card/95 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
-          <Link to="/" className="flex items-center gap-2">
-            <span className="flex size-9 items-center justify-center rounded-xl bg-primary/10 text-xl">
-              🐾
-            </span>
-            <span className="text-lg font-bold tracking-tight text-foreground">
-              TheDogMall
-            </span>
+          <Link to="/">
+            <Logo />
           </Link>
 
           <nav className="hidden items-center gap-8 md:flex">

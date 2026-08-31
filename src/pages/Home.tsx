@@ -3,6 +3,7 @@ import { Truck, ShieldCheck, HeartHandshake } from "lucide-react";
 
 import SiteLayout from "../components/site/SiteLayout";
 import ProductCard from "../components/site/ProductCard";
+import { LogoMark } from "../components/site/Logo";
 import { buttonVariants } from "../components/ui/button";
 import { mockProducts } from "../data/mockProducts";
 import type { ProductCategory } from "../types/product";
@@ -19,6 +20,19 @@ const categories: {
 ];
 
 const featuredProducts = mockProducts.slice(0, 4);
+
+const offers = [
+  {
+    emoji: "🚚",
+    title: "Livraison gratuite",
+    description: "Dès 50 € d'achat, partout en France",
+  },
+  {
+    emoji: "🎉",
+    title: "-10 % sur votre 1ère commande",
+    description: "Avec le code BIENVENUE10",
+  },
+];
 
 const valueProps = [
   {
@@ -41,25 +55,102 @@ const valueProps = [
 export default function Home() {
   return (
     <SiteLayout>
-      <section className="bg-accent/40">
-        <div className="mx-auto flex max-w-6xl flex-col items-center gap-6 px-6 py-20 text-center">
-          <span className="text-5xl">🐾</span>
+      <section className="relative overflow-hidden bg-gradient-to-b from-accent/60 to-background">
+        <div className="mx-auto grid max-w-6xl gap-12 px-6 pt-16 pb-24 lg:grid-cols-2 lg:items-center lg:pt-20">
+          <div>
+            <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary">
+              🐾 Livraison gratuite dès 50 € d'achat
+            </span>
 
-          <h1 className="max-w-2xl text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-            Tout ce dont votre chien a besoin, au même endroit
-          </h1>
+            <h1 className="mt-6 text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+              Tout ce dont votre chien a besoin, au même endroit
+            </h1>
 
-          <p className="max-w-xl text-lg text-muted-foreground">
-            Alimentation, jouets, laisses et accessoires soigneusement
-            choisis pour le bonheur de votre compagnon.
-          </p>
+            <p className="mt-4 max-w-lg text-lg text-muted-foreground">
+              Alimentation, jouets, laisses et accessoires
+              soigneusement choisis pour le bonheur de votre
+              compagnon.
+            </p>
 
-          <Link
-            to="/produits"
-            className={buttonVariants({ size: "lg" })}
-          >
-            Découvrir les produits
-          </Link>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link
+                to="/produits"
+                className={buttonVariants({ size: "lg" })}
+              >
+                Découvrir les produits
+              </Link>
+
+              <Link
+                to="/a-propos"
+                className={buttonVariants({
+                  size: "lg",
+                  variant: "outline",
+                })}
+              >
+                En savoir plus
+              </Link>
+            </div>
+          </div>
+
+          <div className="relative mx-auto aspect-square w-full max-w-md">
+            <div className="absolute inset-6 rounded-[3rem] bg-primary/10" />
+
+            <div className="absolute inset-0 flex items-center justify-center">
+              <LogoMark className="size-24 rounded-3xl shadow-xl" />
+            </div>
+
+            <div className="absolute top-[6%] left-[2%] w-2/5 rotate-[-6deg] rounded-2xl bg-card p-4 text-center shadow-lg ring-1 ring-border">
+              <span className="text-4xl">🍖</span>
+              <p className="mt-1 text-xs font-semibold text-foreground">
+                Alimentation
+              </p>
+            </div>
+
+            <div className="absolute top-0 right-0 w-2/5 rotate-[5deg] rounded-2xl bg-card p-4 text-center shadow-lg ring-1 ring-border">
+              <span className="text-4xl">🎾</span>
+              <p className="mt-1 text-xs font-semibold text-foreground">
+                Jouets
+              </p>
+            </div>
+
+            <div className="absolute bottom-[6%] left-[14%] w-2/5 rotate-[4deg] rounded-2xl bg-card p-4 text-center shadow-lg ring-1 ring-border">
+              <span className="text-4xl">🦮</span>
+              <p className="mt-1 text-xs font-semibold text-foreground">
+                Laisses
+              </p>
+            </div>
+
+            <div className="absolute right-[4%] bottom-0 w-1/3 rotate-[-4deg] rounded-2xl bg-card p-4 text-center shadow-lg ring-1 ring-border">
+              <span className="text-3xl">🛏️</span>
+              <p className="mt-1 text-xs font-semibold text-foreground">
+                Confort
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="relative z-10 mx-auto -mt-10 max-w-6xl px-6">
+        <div className="grid gap-4 sm:grid-cols-2">
+          {offers.map((offer) => (
+            <div
+              key={offer.title}
+              className="flex items-center gap-4 rounded-2xl bg-card p-5 shadow-md ring-1 ring-border"
+            >
+              <span className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-2xl">
+                {offer.emoji}
+              </span>
+
+              <div>
+                <p className="font-semibold text-foreground">
+                  {offer.title}
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  {offer.description}
+                </p>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
