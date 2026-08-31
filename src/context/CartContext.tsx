@@ -14,6 +14,7 @@ function readStoredCart(): CartItem[] {
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>(readStoredCart);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   useEffect(() => {
     try {
@@ -64,6 +65,14 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setItems([]);
   }
 
+  function openDrawer() {
+    setIsDrawerOpen(true);
+  }
+
+  function closeDrawer() {
+    setIsDrawerOpen(false);
+  }
+
   const itemCount = items.reduce(
     (sum, item) => sum + item.quantity,
     0
@@ -84,6 +93,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
         clearCart,
         itemCount,
         subtotal,
+        isDrawerOpen,
+        openDrawer,
+        closeDrawer,
       }}
     >
       {children}

@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
+import { Search, X } from "lucide-react";
 
 import SiteLayout from "../components/site/SiteLayout";
 import ProductCard from "../components/site/ProductCard";
@@ -18,20 +19,42 @@ const categories: ProductCategory[] = [
 export default function Products() {
   const [searchParams, setSearchParams] = useSearchParams();
   const activeCategory = searchParams.get("categorie");
+  const searchTerm = searchParams.get("recherche") ?? "";
 
   const products = useMemo(() => {
-    if (!activeCategory) return mockProducts;
-    return mockProducts.filter(
-      (product) => product.category === activeCategory
-    );
-  }, [activeCategory]);
+    const term = searchTerm.trim().toLowerCase();
+
+    return mockProducts.filter((product) => {
+      const matchesCategory =
+        !activeCategory || product.category === activeCategory;
+
+      const matchesSearch =
+        !term ||
+        product.name.toLowerCase().includes(term) ||
+        product.description.toLowerCase().includes(term);
+
+      return matchesCategory && matchesSearch;
+    });
+  }, [activeCategory, searchTerm]);
 
   function selectCategory(category: string | null) {
-    if (!category) {
-      setSearchParams({});
-      return;
+    const next = new URLSearchParams(searchParams);
+    if (category) {
+      next.set("categorie", category);
+    } else {
+      next.delete("categorie");
     }
-    setSearchParams({ categorie: category });
+    setSearchParams(next);
+  }
+
+  function updateSearch(term: string) {
+    const next = new URLSearchParams(searchParams);
+    if (term) {
+      next.set("recherche", term);
+    } else {
+      next.delete("recherche");
+    }
+    setSearchParams(next);
   }
 
   return (
@@ -44,9 +67,31 @@ export default function Products() {
         <p className="mt-1 text-muted-foreground">
           {products.length} produit{products.length > 1 ? "s" : ""}
           {activeCategory ? ` dans « ${activeCategory} »` : ""}
+          {searchTerm ? ` pour « ${searchTerm} »` : ""}
         </p>
 
-        <div className="mt-6 flex flex-wrap gap-2">
+        <div className="mt-6 flex items-center gap-2 rounded-full border border-input bg-card px-4 py-2.5 sm:max-w-sm">
+          <Search size={16} className="shrink-0 text-muted-foreground" />
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={(event) => updateSearch(event.target.value)}
+            placeholder="Rechercher un produit..."
+            className="w-full bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground"
+          />
+          {searchTerm && (
+            <button
+              type="button"
+              aria-label="Effacer la recherche"
+              className="shrink-0 text-muted-foreground hover:text-foreground"
+              onClick={() => updateSearch("")}
+            >
+              <X size={16} />
+            </button>
+          )}
+        </div>
+
+        <div className="mt-4 flex flex-wrap gap-2">
           <Button
             variant={activeCategory ? "outline" : "default"}
             size="sm"
@@ -77,7 +122,7 @@ export default function Products() {
           </div>
         ) : (
           <div className="mt-8 rounded-2xl border border-dashed border-border bg-card/50 py-20 text-center text-muted-foreground">
-            Aucun produit dans cette catégorie pour le moment.
+            Aucun produit ne correspond à votre recherche.
           </div>
         )}
       </div>

@@ -15,6 +15,9 @@ export type CartContextValue = {
   clearCart: () => void;
   itemCount: number;
   subtotal: number;
+  isDrawerOpen: boolean;
+  openDrawer: () => void;
+  closeDrawer: () => void;
 };
 
 export const CartContext = createContext<CartContextValue | null>(null);

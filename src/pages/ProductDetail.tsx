@@ -10,9 +10,8 @@ import { mockProducts } from "../data/mockProducts";
 
 export default function ProductDetail() {
   const { productId } = useParams();
-  const { addItem } = useCart();
+  const { addItem, openDrawer } = useCart();
   const [quantity, setQuantity] = useState(1);
-  const [added, setAdded] = useState(false);
 
   const product = mockProducts.find((item) => item.id === productId);
 
@@ -29,7 +28,7 @@ export default function ProductDetail() {
 
   const handleAddToCart = () => {
     addItem(product, quantity);
-    setAdded(true);
+    openDrawer();
   };
 
   return (
@@ -101,12 +100,6 @@ export default function ProductDetail() {
                 Ajouter au panier
               </Button>
             </div>
-
-            {added && (
-              <p className="text-sm font-medium text-primary">
-                Ajouté au panier ✓
-              </p>
-            )}
           </div>
         </div>
 

@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
-import { Menu, ShoppingCart, X } from "lucide-react";
+import { useEffect, useState, type FormEvent } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Menu, Search, ShoppingCart, X } from "lucide-react";
 
 import { useCart } from "../../hooks/useCart";
 import { buttonVariants } from "../ui/button";
@@ -15,8 +15,12 @@ const navItems = [
 ];
 
 export default function SiteHeader() {
-  const { itemCount } = useCart();
+  const { itemCount, openDrawer } = useCart();
+  const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
@@ -25,11 +29,37 @@ export default function SiteHeader() {
     };
   }, [mobileOpen]);
 
+  useEffect(() => {
+    function handleScroll() {
+      setScrolled(window.scrollY > 8);
+    }
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  function handleSearchSubmit(event: FormEvent) {
+    event.preventDefault();
+    const trimmed = searchTerm.trim();
+    navigate(
+      trimmed
+        ? `/produits?recherche=${encodeURIComponent(trimmed)}`
+        : "/produits"
+    );
+    setSearchOpen(false);
+    setSearchTerm("");
+  }
+
   return (
     <>
-      <header className="sticky top-0 z-40 border-b border-border bg-card/95 backdrop-blur">
-        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
-          <Link to="/">
+      <header
+        className={cn(
+          "sticky top-0 z-40 border-b border-border bg-card/95 backdrop-blur transition-shadow",
+          scrolled && "shadow-sm"
+        )}
+      >
+        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-6">
+          <Link to="/" className="shrink-0">
             <Logo />
           </Link>
 
@@ -53,14 +83,54 @@ export default function SiteHeader() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-2">
-            <Link
-              to="/panier"
+          <div className="flex items-center gap-1">
+            <div className="hidden items-center md:flex">
+              {searchOpen ? (
+                <form
+                  onSubmit={handleSearchSubmit}
+                  className="flex items-center overflow-hidden rounded-full border border-input bg-background pl-3 transition-all"
+                >
+                  <Search
+                    size={16}
+                    className="shrink-0 text-muted-foreground"
+                  />
+                  <input
+                    autoFocus
+                    type="text"
+                    value={searchTerm}
+                    onChange={(event) =>
+                      setSearchTerm(event.target.value)
+                    }
+                    onBlur={() =>
+                      !searchTerm && setSearchOpen(false)
+                    }
+                    placeholder="Rechercher un produit..."
+                    className="h-9 w-48 bg-transparent px-2 text-sm text-foreground outline-none placeholder:text-muted-foreground"
+                  />
+                </form>
+              ) : (
+                <button
+                  type="button"
+                  aria-label="Rechercher"
+                  className={buttonVariants({
+                    variant: "ghost",
+                    size: "icon",
+                  })}
+                  onClick={() => setSearchOpen(true)}
+                >
+                  <Search size={20} />
+                </button>
+              )}
+            </div>
+
+            <button
+              type="button"
               aria-label="Voir le panier"
               className={cn(
                 buttonVariants({ variant: "ghost", size: "icon" }),
                 "relative"
               )}
+              onClick={openDrawer}
             >
               <ShoppingCart size={20} />
 
@@ -69,7 +139,7 @@ export default function SiteHeader() {
                   {itemCount}
                 </span>
               )}
-            </Link>
+            </button>
 
             <button
               type="button"
@@ -113,6 +183,23 @@ export default function SiteHeader() {
                 <X size={18} />
               </button>
             </div>
+
+            <form
+              onSubmit={(event) => {
+                handleSearchSubmit(event);
+                setMobileOpen(false);
+              }}
+              className="flex items-center gap-2 border-b border-border p-4"
+            >
+              <Search size={16} className="shrink-0 text-muted-foreground" />
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={(event) => setSearchTerm(event.target.value)}
+                placeholder="Rechercher..."
+                className="h-9 w-full bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground"
+              />
+            </form>
 
             <nav className="flex flex-col gap-1 p-4">
               {navItems.map((item) => (

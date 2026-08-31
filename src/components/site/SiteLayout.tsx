@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import SiteHeader from "./SiteHeader";
 import SiteFooter from "./SiteFooter";
 import PromoBanner from "./PromoBanner";
+import CartDrawer from "./CartDrawer";
 
 type SiteLayoutProps = {
   children: ReactNode;
@@ -15,6 +16,7 @@ export default function SiteLayout({ children }: SiteLayoutProps) {
       <SiteHeader />
       <main className="flex-1">{children}</main>
       <SiteFooter />
+      <CartDrawer />
     </div>
   );
 }
