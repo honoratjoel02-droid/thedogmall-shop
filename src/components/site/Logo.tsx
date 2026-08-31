@@ -53,26 +53,14 @@ export function LogoMark({ className }: LogoMarkProps) {
 
 type LogoProps = {
   className?: string;
-  markClassName?: string;
-  wordmarkClassName?: string;
 };
 
-export default function Logo({
-  className,
-  markClassName,
-  wordmarkClassName,
-}: LogoProps) {
+export default function Logo({ className }: LogoProps) {
   return (
-    <span className={cn("flex items-center gap-2", className)}>
-      <LogoMark className={markClassName} />
-      <span
-        className={cn(
-          "text-lg font-bold tracking-tight text-foreground",
-          wordmarkClassName
-        )}
-      >
-        TheDogMall
-      </span>
-    </span>
+    <img
+      src="/logo.png"
+      alt="TheDogMall"
+      className={cn("h-16 w-auto", className)}
+    />
   );
 }

@@ -5,7 +5,6 @@ import SiteLayout from "../components/site/SiteLayout";
 import ProductCard from "../components/site/ProductCard";
 import Reveal from "../components/site/Reveal";
 import Newsletter from "../components/site/Newsletter";
-import { LogoMark } from "../components/site/Logo";
 import { buttonVariants } from "../components/ui/button";
 import { mockProducts } from "../data/mockProducts";
 import type { ProductCategory } from "../types/product";
@@ -95,38 +94,26 @@ export default function Home() {
           </Reveal>
 
           <Reveal delay={150}>
-            <div className="relative mx-auto aspect-square w-full max-w-md">
-              <div className="absolute inset-6 rounded-[3rem] bg-primary/10" />
+            <div className="relative mx-auto w-full max-w-lg py-10">
+              <div className="absolute inset-6 -z-10 rounded-[3rem] bg-primary/10" />
 
-              <div className="absolute inset-0 flex items-center justify-center">
-                <LogoMark className="size-24 rounded-3xl shadow-xl" />
-              </div>
+              <img
+                src="/logo.png"
+                alt="TheDogMall"
+                className="relative mx-auto w-full max-w-sm drop-shadow-2xl"
+              />
 
-              <div className="absolute top-[6%] left-[2%] w-2/5 rotate-[-6deg] rounded-2xl bg-card p-4 text-center shadow-lg ring-1 ring-border transition-transform duration-300 hover:-translate-y-1 hover:rotate-0">
-                <span className="text-4xl">🍖</span>
-                <p className="mt-1 text-xs font-semibold text-foreground">
-                  Alimentation
+              <div className="absolute top-2 -left-2 rotate-[-6deg] rounded-2xl bg-card px-4 py-3 text-center shadow-lg ring-1 ring-border transition-transform duration-300 hover:-translate-y-1 hover:rotate-0 sm:-left-6">
+                <span className="text-2xl">🚚</span>
+                <p className="mt-0.5 text-xs font-semibold whitespace-nowrap text-foreground">
+                  Livraison rapide
                 </p>
               </div>
 
-              <div className="absolute top-0 right-0 w-2/5 rotate-[5deg] rounded-2xl bg-card p-4 text-center shadow-lg ring-1 ring-border transition-transform duration-300 hover:-translate-y-1 hover:rotate-0">
-                <span className="text-4xl">🎾</span>
-                <p className="mt-1 text-xs font-semibold text-foreground">
-                  Jouets
-                </p>
-              </div>
-
-              <div className="absolute bottom-[6%] left-[14%] w-2/5 rotate-[4deg] rounded-2xl bg-card p-4 text-center shadow-lg ring-1 ring-border transition-transform duration-300 hover:-translate-y-1 hover:rotate-0">
-                <span className="text-4xl">🦮</span>
-                <p className="mt-1 text-xs font-semibold text-foreground">
-                  Laisses
-                </p>
-              </div>
-
-              <div className="absolute right-[4%] bottom-0 w-1/3 rotate-[-4deg] rounded-2xl bg-card p-4 text-center shadow-lg ring-1 ring-border transition-transform duration-300 hover:-translate-y-1 hover:rotate-0">
-                <span className="text-3xl">🛏️</span>
-                <p className="mt-1 text-xs font-semibold text-foreground">
-                  Confort
+              <div className="absolute -right-2 bottom-4 rotate-[5deg] rounded-2xl bg-card px-4 py-3 text-center shadow-lg ring-1 ring-border transition-transform duration-300 hover:-translate-y-1 hover:rotate-0 sm:-right-6">
+                <span className="text-2xl">⭐</span>
+                <p className="mt-0.5 text-xs font-semibold whitespace-nowrap text-foreground">
+                  4.9/5 clients
                 </p>
               </div>
             </div>
