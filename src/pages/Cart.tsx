@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Minus, Plus, Trash2 } from "lucide-react";
 
 import SiteLayout from "../components/site/SiteLayout";
+import ProductImage from "../components/site/ProductImage";
 import { buttonVariants } from "../components/ui/button";
 import { Card, CardContent } from "../components/ui/card";
 import { useCart } from "../hooks/useCart";
@@ -48,9 +49,13 @@ export default function Cart() {
                 <CardContent className="flex items-center gap-4">
                   <Link
                     to={`/produits/${item.product.id}`}
-                    className="flex size-20 shrink-0 items-center justify-center rounded-2xl bg-accent text-4xl"
+                    className="block size-20 shrink-0 overflow-hidden rounded-2xl"
                   >
-                    {item.product.emoji}
+                    <ProductImage
+                      product={item.product}
+                      className="size-20 rounded-2xl"
+                      emojiClassName="text-4xl"
+                    />
                   </Link>
 
                   <div className="flex-1">

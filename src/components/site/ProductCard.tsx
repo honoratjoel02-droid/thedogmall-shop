@@ -4,6 +4,7 @@ import { Plus } from "lucide-react";
 import type { Product } from "../../types/product";
 import { Card, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
+import ProductImage from "./ProductImage";
 import { useCart } from "../../hooks/useCart";
 
 type ProductCardProps = {
@@ -23,9 +24,13 @@ export default function ProductCard({ product }: ProductCardProps) {
       <CardContent className="flex flex-1 flex-col gap-3">
         <Link
           to={`/produits/${product.id}`}
-          className="flex aspect-square items-center justify-center rounded-2xl bg-accent text-6xl transition-transform duration-300 group-hover:scale-105"
+          className="block overflow-hidden rounded-2xl transition-transform duration-300 group-hover:scale-105"
         >
-          {product.emoji}
+          <ProductImage
+            product={product}
+            className="aspect-square w-full rounded-2xl"
+            emojiClassName="text-6xl"
+          />
         </Link>
 
         <span className="text-xs font-medium tracking-wide text-primary uppercase">

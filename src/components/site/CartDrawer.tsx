@@ -5,6 +5,7 @@ import { Minus, Plus, ShoppingBag, Trash2, X } from "lucide-react";
 import { useCart } from "../../hooks/useCart";
 import { buttonVariants } from "../ui/button";
 import { cn } from "../../lib/utils";
+import ProductImage from "./ProductImage";
 
 export default function CartDrawer() {
   const {
@@ -90,9 +91,13 @@ export default function CartDrawer() {
                     <Link
                       to={`/produits/${item.product.id}`}
                       onClick={closeDrawer}
-                      className="flex size-16 shrink-0 items-center justify-center rounded-xl bg-accent text-3xl"
+                      className="block size-16 shrink-0 overflow-hidden rounded-xl"
                     >
-                      {item.product.emoji}
+                      <ProductImage
+                        product={item.product}
+                        className="size-16 rounded-xl"
+                        emojiClassName="text-3xl"
+                      />
                     </Link>
 
                     <div className="min-w-0 flex-1">

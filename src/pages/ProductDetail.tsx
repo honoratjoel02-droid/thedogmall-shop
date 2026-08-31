@@ -4,6 +4,7 @@ import { Minus, Plus } from "lucide-react";
 
 import SiteLayout from "../components/site/SiteLayout";
 import ProductCard from "../components/site/ProductCard";
+import ProductImage from "../components/site/ProductImage";
 import { Button } from "../components/ui/button";
 import { useCart } from "../hooks/useCart";
 import { mockProducts } from "../data/mockProducts";
@@ -43,9 +44,11 @@ export default function ProductDetail() {
         </nav>
 
         <div className="grid gap-10 md:grid-cols-2">
-          <div className="flex aspect-square items-center justify-center rounded-3xl bg-accent text-[8rem]">
-            {product.emoji}
-          </div>
+          <ProductImage
+            product={product}
+            className="aspect-square w-full rounded-3xl"
+            emojiClassName="text-[8rem]"
+          />
 
           <div className="flex flex-col gap-4">
             <span className="text-xs font-medium tracking-wide text-primary uppercase">
