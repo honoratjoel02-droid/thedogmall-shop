@@ -11,5 +11,4 @@ export type Product = {
   category: ProductCategory;
   price: number;
   description: string;
-  emoji: string;
 };

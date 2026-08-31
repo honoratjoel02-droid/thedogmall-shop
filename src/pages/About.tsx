@@ -1,83 +1,94 @@
 import { Link } from "react-router-dom";
+import { Heart, PawPrint, Truck } from "@phosphor-icons/react";
 
 import SiteLayout from "../components/site/SiteLayout";
+import Reveal from "../components/site/Reveal";
 import { buttonVariants } from "../components/ui/button";
 
 const values = [
   {
-    emoji: "🐾",
-    title: "Passion animale",
+    icon: PawPrint,
+    title: "Fondé par des maîtres",
     description:
-      "Fondé par des amoureux des chiens, TheDogMall sélectionne chaque produit en pensant au bien-être de votre compagnon.",
+      "TheDogMall est né dans un salon, entre deux chiens qui réclamaient leur gamelle. Nous achetons ce que nous donnons aux nôtres.",
   },
   {
-    emoji: "✅",
-    title: "Qualité vérifiée",
+    icon: Heart,
+    title: "Testé avant d'être vendu",
     description:
-      "Nous testons et choisissons des produits durables, sûrs et adaptés à toutes les tailles de chiens.",
+      "Chaque référence passe entre les pattes de nos chiens avant d'entrer au catalogue. Ce qui ne tient pas ne reste pas.",
   },
   {
-    emoji: "🚚",
-    title: "Service attentionné",
+    icon: Truck,
+    title: "Une équipe joignable",
     description:
-      "Une équipe disponible pour vous conseiller avant, pendant et après votre commande.",
+      "Un doute sur une taille, une transition alimentaire, un retour ? Vous nous écrivez, on répond dans la journée.",
   },
 ];
 
 export default function About() {
   return (
     <SiteLayout>
-      <section className="bg-accent/40">
-        <div className="mx-auto flex max-w-3xl flex-col items-center gap-4 px-6 py-20 text-center">
-          <span className="text-5xl">🐾</span>
-
-          <h1 className="text-4xl font-bold tracking-tight text-foreground">
-            À propos de TheDogMall
+      <section className="border-b border-border">
+        <div className="mx-auto max-w-3xl px-6 pt-16 pb-16 lg:pt-24">
+          <h1 className="text-4xl font-bold tracking-tight text-balance text-foreground sm:text-5xl">
+            Une boutique tenue par des gens qui ont un chien
           </h1>
 
-          <p className="text-lg text-muted-foreground">
-            Nous croyons que chaque chien mérite le meilleur : une
-            alimentation saine, des accessoires confortables et des
-            jouets qui durent. C'est pour ça qu'on a créé TheDogMall.
+          <p className="mt-5 text-lg text-muted-foreground">
+            Nous vendons peu de références, mais nous savons pourquoi
+            chacune est là.
           </p>
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 py-16">
-        <div className="grid gap-8 sm:grid-cols-3">
-          {values.map((value) => (
-            <div
-              key={value.title}
-              className="flex flex-col items-center gap-3 rounded-2xl bg-card p-8 text-center shadow-sm ring-1 ring-border"
+      <Reveal>
+        <section className="mx-auto max-w-3xl px-6 py-16">
+          <ul className="grid gap-10">
+            {values.map((value) => {
+              const Icon = value.icon;
+
+              return (
+                <li
+                  key={value.title}
+                  className="grid gap-4 sm:grid-cols-[auto_1fr] sm:gap-6"
+                >
+                  <span className="flex size-11 items-center justify-center rounded-2xl bg-accent text-primary">
+                    <Icon size={22} weight="duotone" />
+                  </span>
+
+                  <div>
+                    <h2 className="text-lg font-semibold text-foreground">
+                      {value.title}
+                    </h2>
+
+                    <p className="mt-2 text-muted-foreground">
+                      {value.description}
+                    </p>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      </Reveal>
+
+      <Reveal>
+        <section className="border-t border-border bg-card">
+          <div className="mx-auto flex max-w-3xl flex-col items-start gap-5 px-6 py-16">
+            <h2 className="text-2xl font-bold tracking-tight text-foreground">
+              Prêt à gâter votre chien ?
+            </h2>
+
+            <Link
+              to="/produits"
+              className={buttonVariants({ size: "lg" })}
             >
-              <span className="text-4xl">{value.emoji}</span>
-
-              <h2 className="text-lg font-semibold text-foreground">
-                {value.title}
-              </h2>
-
-              <p className="text-sm text-muted-foreground">
-                {value.description}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="border-t border-border bg-card">
-        <div className="mx-auto flex max-w-3xl flex-col items-center gap-4 px-6 py-16 text-center">
-          <h2 className="text-2xl font-bold text-foreground">
-            Prêt à gâter votre chien ?
-          </h2>
-
-          <Link
-            to="/produits"
-            className={buttonVariants({ size: "lg", className: "px-6" })}
-          >
-            Découvrir les produits
-          </Link>
-        </div>
-      </section>
+              Voir le catalogue
+            </Link>
+          </div>
+        </section>
+      </Reveal>
     </SiteLayout>
   );
 }

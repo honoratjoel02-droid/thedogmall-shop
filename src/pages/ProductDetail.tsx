@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
-import { Minus, Plus } from "lucide-react";
+import { Minus, Plus } from "@phosphor-icons/react";
 
 import SiteLayout from "../components/site/SiteLayout";
 import ProductCard from "../components/site/ProductCard";
@@ -46,8 +46,8 @@ export default function ProductDetail() {
         <div className="grid gap-10 md:grid-cols-2">
           <ProductImage
             product={product}
-            className="aspect-square w-full rounded-3xl"
-            emojiClassName="text-[8rem]"
+            className="aspect-square w-full rounded-2xl"
+            iconSize={96}
           />
 
           <div className="flex flex-col gap-4">

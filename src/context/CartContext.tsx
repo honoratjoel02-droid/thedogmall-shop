@@ -20,7 +20,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     try {
       localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
     } catch {
-      // localStorage unavailable (private mode, quota) — cart just won't persist
+      // localStorage unavailable (private mode, quota), cart just won't persist
     }
   }, [items]);
 

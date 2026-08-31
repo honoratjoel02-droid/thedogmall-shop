@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { CheckCircle, EnvelopeSimple, MapPin, Phone } from "@phosphor-icons/react";
 
 import SiteLayout from "../components/site/SiteLayout";
 import { Button } from "../components/ui/button";
@@ -33,7 +33,7 @@ export default function Contact() {
             <CardContent className="p-6">
               {sent ? (
                 <div className="flex flex-col items-center gap-3 py-12 text-center">
-                  <span className="text-4xl">✅</span>
+                  <CheckCircle size={44} weight="duotone" className="text-primary" />
                   <h2 className="text-lg font-semibold text-foreground">
                     Message envoyé
                   </h2>
@@ -101,7 +101,7 @@ export default function Contact() {
               </h2>
 
               <div className="flex items-start gap-3 text-sm text-muted-foreground">
-                <Mail size={18} className="mt-0.5 shrink-0 text-primary" />
+                <EnvelopeSimple size={18} className="mt-0.5 shrink-0 text-primary" />
                 contact@thedogmall.fr
               </div>
 

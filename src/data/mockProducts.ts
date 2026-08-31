@@ -8,7 +8,6 @@ export const mockProducts: Product[] = [
     price: 34.9,
     description:
       "Croquettes complètes pour chien adulte, à base de poulet frais et de riz complet, sans céréales inutiles.",
-    emoji: "🍖",
   },
   {
     id: "croquettes-chiot",
@@ -17,7 +16,6 @@ export const mockProducts: Product[] = [
     price: 29.9,
     description:
       "Formule spéciale croissance enrichie en DHA pour accompagner le développement des chiots.",
-    emoji: "🦴",
   },
   {
     id: "friandises-dentaires",
@@ -26,7 +24,6 @@ export const mockProducts: Product[] = [
     price: 8.5,
     description:
       "Bâtonnets à mâcher qui aident à réduire le tartre tout en rafraîchissant l'haleine.",
-    emoji: "🌿",
   },
   {
     id: "balle-caoutchouc",
@@ -35,7 +32,6 @@ export const mockProducts: Product[] = [
     price: 9.9,
     description:
       "Balle résistante aux morsures les plus vigoureuses, idéale pour les jeux de lancer.",
-    emoji: "🎾",
   },
   {
     id: "corde-tressee",
@@ -44,7 +40,6 @@ export const mockProducts: Product[] = [
     price: 7.5,
     description:
       "Corde en coton naturel pour les jeux de tir et le nettoyage des dents.",
-    emoji: "🪢",
   },
   {
     id: "distributeur-friandises",
@@ -53,7 +48,6 @@ export const mockProducts: Product[] = [
     price: 18.9,
     description:
       "Jouet d'occupation qui stimule le chien mentalement tout en distribuant des friandises.",
-    emoji: "🧩",
   },
   {
     id: "laisse-cuir",
@@ -62,7 +56,6 @@ export const mockProducts: Product[] = [
     price: 24.9,
     description:
       "Laisse robuste et confortable en cuir tanné, 1,2 m, pour chiens de toutes tailles.",
-    emoji: "🦮",
   },
   {
     id: "collier-reglable",
@@ -71,7 +64,6 @@ export const mockProducts: Product[] = [
     price: 14.9,
     description:
       "Collier rembourré et réglable avec boucle de sécurité, disponible en plusieurs couleurs.",
-    emoji: "🎗️",
   },
   {
     id: "harnais-sport",
@@ -80,7 +72,6 @@ export const mockProducts: Product[] = [
     price: 32.0,
     description:
       "Harnais ergonomique qui répartit la pression pour des balades sans tirer.",
-    emoji: "🧵",
   },
   {
     id: "panier-moelleux",
@@ -89,7 +80,6 @@ export const mockProducts: Product[] = [
     price: 42.0,
     description:
       "Coussin déhoussable et lavable, garni mémoire de forme pour un sommeil réparateur.",
-    emoji: "🛏️",
   },
   {
     id: "gamelle-double",
@@ -98,7 +88,6 @@ export const mockProducts: Product[] = [
     price: 16.5,
     description:
       "Set de deux gamelles antidérapantes en inox pour l'eau et la nourriture.",
-    emoji: "🥣",
   },
   {
     id: "shampoing-doux",
@@ -107,7 +96,6 @@ export const mockProducts: Product[] = [
     price: 11.9,
     description:
       "Shampoing hypoallergénique à l'avoine pour peaux sensibles, sans parabène.",
-    emoji: "🧴",
   },
   {
     id: "brosse-demelante",
@@ -116,6 +104,5 @@ export const mockProducts: Product[] = [
     price: 13.5,
     description:
       "Brosse à picots souples pour démêler le poil sans irriter la peau.",
-    emoji: "🪮",
   },
 ];

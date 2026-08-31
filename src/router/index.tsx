@@ -7,6 +7,7 @@ import Cart from "../pages/Cart";
 import Checkout from "../pages/Checkout";
 import Contact from "../pages/Contact";
 import About from "../pages/About";
+import Legal from "../pages/Legal";
 import NotFound from "../pages/NotFound";
 
 export const router = createBrowserRouter([
@@ -37,6 +38,18 @@ export const router = createBrowserRouter([
   {
     path: "/contact",
     element: <Contact />,
+  },
+  {
+    path: "/mentions-legales",
+    element: <Legal page="mentions" />,
+  },
+  {
+    path: "/confidentialite",
+    element: <Legal page="confidentialite" />,
+  },
+  {
+    path: "/cgv",
+    element: <Legal page="cgv" />,
   },
   {
     path: "*",

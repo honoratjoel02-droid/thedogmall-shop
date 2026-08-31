@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { X } from "lucide-react";
+import { Truck, X } from "@phosphor-icons/react";
 
 export default function PromoBanner() {
   const [dismissed, setDismissed] = useState(false);
@@ -7,9 +7,10 @@ export default function PromoBanner() {
   if (dismissed) return null;
 
   return (
-    <div className="relative bg-primary px-6 py-2.5 text-center text-sm font-medium text-primary-foreground">
-      <span>
-        🚚 Livraison gratuite dès 50 € d'achat · 🎉 -10 % sur votre
+    <div className="relative bg-primary px-12 py-2.5 text-center text-sm font-medium text-primary-foreground">
+      <span className="inline-flex items-center gap-2">
+        <Truck size={16} weight="bold" className="shrink-0" />
+        Livraison gratuite dès 50 € d'achat, et -10 % sur votre
         première commande avec le code{" "}
         <span className="font-bold">BIENVENUE10</span>
       </span>

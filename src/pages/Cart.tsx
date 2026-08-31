@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Minus, Plus, Trash2 } from "lucide-react";
+import { Minus, Plus, ShoppingBag, Trash } from "@phosphor-icons/react";
 
 import SiteLayout from "../components/site/SiteLayout";
 import ProductImage from "../components/site/ProductImage";
@@ -14,7 +14,7 @@ export default function Cart() {
     return (
       <SiteLayout>
         <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 px-6 py-24 text-center">
-          <span className="text-5xl">🛒</span>
+          <ShoppingBag size={56} weight="duotone" className="text-muted-foreground" />
 
           <h1 className="text-2xl font-bold text-foreground">
             Votre panier est vide
@@ -54,7 +54,7 @@ export default function Cart() {
                     <ProductImage
                       product={item.product}
                       className="size-20 rounded-2xl"
-                      emojiClassName="text-4xl"
+                      iconSize={28}
                     />
                   </Link>
 
@@ -115,7 +115,7 @@ export default function Cart() {
                     className="text-muted-foreground transition-colors hover:text-destructive"
                     onClick={() => removeItem(item.product.id)}
                   >
-                    <Trash2 size={18} />
+                    <Trash size={18} />
                   </button>
                 </CardContent>
               </Card>

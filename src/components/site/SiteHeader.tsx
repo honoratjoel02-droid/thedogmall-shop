@@ -1,6 +1,11 @@
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { Menu, Search, ShoppingCart, X } from "lucide-react";
+import {
+  List,
+  MagnifyingGlass,
+  ShoppingCart,
+  X,
+} from "@phosphor-icons/react";
 
 import { useCart } from "../../hooks/useCart";
 import { buttonVariants } from "../ui/button";
@@ -17,6 +22,7 @@ const navItems = [
 export default function SiteHeader() {
   const { itemCount, openDrawer } = useCart();
   const navigate = useNavigate();
+  const sentinel = useRef<HTMLDivElement>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -30,12 +36,16 @@ export default function SiteHeader() {
   }, [mobileOpen]);
 
   useEffect(() => {
-    function handleScroll() {
-      setScrolled(window.scrollY > 8);
-    }
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    const node = sentinel.current;
+    if (!node || typeof IntersectionObserver === "undefined") return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setScrolled(!entry.isIntersecting),
+      { threshold: 0 }
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
   }, []);
 
   function handleSearchSubmit(event: FormEvent) {
@@ -52,6 +62,8 @@ export default function SiteHeader() {
 
   return (
     <>
+      <div ref={sentinel} aria-hidden="true" />
+
       <header
         className={cn(
           "sticky top-0 z-40 border-b border-border bg-card/95 backdrop-blur transition-shadow",
@@ -63,7 +75,10 @@ export default function SiteHeader() {
             <Logo />
           </Link>
 
-          <nav className="hidden items-center gap-8 md:flex">
+          <nav
+            aria-label="Navigation principale"
+            className="hidden items-center gap-8 md:flex"
+          >
             {navItems.map((item) => (
               <NavLink
                 key={item.path}
@@ -88,16 +103,18 @@ export default function SiteHeader() {
               {searchOpen ? (
                 <form
                   onSubmit={handleSearchSubmit}
-                  className="flex items-center overflow-hidden rounded-full border border-input bg-background pl-3 transition-all"
+                  role="search"
+                  className="flex items-center overflow-hidden rounded-lg border border-input bg-background pl-3"
                 >
-                  <Search
+                  <MagnifyingGlass
                     size={16}
                     className="shrink-0 text-muted-foreground"
                   />
                   <input
                     autoFocus
-                    type="text"
+                    type="search"
                     value={searchTerm}
+                    aria-label="Rechercher un produit"
                     onChange={(event) =>
                       setSearchTerm(event.target.value)
                     }
@@ -118,14 +135,18 @@ export default function SiteHeader() {
                   })}
                   onClick={() => setSearchOpen(true)}
                 >
-                  <Search size={20} />
+                  <MagnifyingGlass size={20} />
                 </button>
               )}
             </div>
 
             <button
               type="button"
-              aria-label="Voir le panier"
+              aria-label={
+                itemCount > 0
+                  ? `Voir le panier, ${itemCount} article${itemCount > 1 ? "s" : ""}`
+                  : "Voir le panier"
+              }
               className={cn(
                 buttonVariants({ variant: "ghost", size: "icon" }),
                 "relative"
@@ -150,7 +171,7 @@ export default function SiteHeader() {
               )}
               onClick={() => setMobileOpen(true)}
             >
-              <Menu size={20} />
+              <List size={20} />
             </button>
           </div>
         </div>
@@ -161,7 +182,7 @@ export default function SiteHeader() {
           <button
             type="button"
             aria-label="Fermer le menu"
-            className="absolute inset-0 bg-black/20"
+            className="absolute inset-0 bg-black/40"
             onClick={() => setMobileOpen(false)}
           />
 
@@ -189,19 +210,24 @@ export default function SiteHeader() {
                 handleSearchSubmit(event);
                 setMobileOpen(false);
               }}
+              role="search"
               className="flex items-center gap-2 border-b border-border p-4"
             >
-              <Search size={16} className="shrink-0 text-muted-foreground" />
+              <MagnifyingGlass
+                size={16}
+                className="shrink-0 text-muted-foreground"
+              />
               <input
-                type="text"
+                type="search"
                 value={searchTerm}
+                aria-label="Rechercher un produit"
                 onChange={(event) => setSearchTerm(event.target.value)}
                 placeholder="Rechercher..."
                 className="h-9 w-full bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground"
               />
             </form>
 
-            <nav className="flex flex-col gap-1 p-4">
+            <nav aria-label="Navigation principale" className="flex flex-col gap-1 p-4">
               {navItems.map((item) => (
                 <NavLink
                   key={item.path}
@@ -210,9 +236,9 @@ export default function SiteHeader() {
                   onClick={() => setMobileOpen(false)}
                   className={({ isActive }) =>
                     cn(
-                      "rounded-xl px-3 py-2.5 text-sm font-medium transition-colors",
+                      "rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
                       isActive
-                        ? "bg-primary/10 text-primary"
+                        ? "bg-accent text-primary"
                         : "text-foreground/70 hover:bg-muted hover:text-foreground"
                     )
                   }

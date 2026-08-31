@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Minus, Plus, ShoppingBag, Trash2, X } from "lucide-react";
+import { Minus, Plus, ShoppingBag, Trash, X } from "@phosphor-icons/react";
 
 import { useCart } from "../../hooks/useCart";
 import { buttonVariants } from "../ui/button";
@@ -67,7 +67,7 @@ export default function CartDrawer() {
 
         {items.length === 0 ? (
           <div className="flex flex-1 flex-col items-center justify-center gap-3 p-6 text-center">
-            <span className="text-5xl">🛒</span>
+            <ShoppingBag size={48} weight="duotone" className="text-muted-foreground" />
             <p className="font-medium text-foreground">
               Votre panier est vide
             </p>
@@ -96,7 +96,7 @@ export default function CartDrawer() {
                       <ProductImage
                         product={item.product}
                         className="size-16 rounded-xl"
-                        emojiClassName="text-3xl"
+                        iconSize={24}
                       />
                     </Link>
 
@@ -159,7 +159,7 @@ export default function CartDrawer() {
                         className="text-muted-foreground transition-colors hover:text-destructive"
                         onClick={() => removeItem(item.product.id)}
                       >
-                        <Trash2 size={16} />
+                        <Trash size={16} />
                       </button>
                     </div>
                   </li>

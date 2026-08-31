@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { Link, Navigate } from "react-router-dom";
+import { CheckCircle } from "@phosphor-icons/react";
 
 import SiteLayout from "../components/site/SiteLayout";
 import { Button, buttonVariants } from "../components/ui/button";
@@ -24,7 +25,7 @@ export default function Checkout() {
     return (
       <SiteLayout>
         <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 px-6 py-24 text-center">
-          <span className="text-5xl">🎉</span>
+          <CheckCircle size={56} weight="duotone" className="text-primary" />
 
           <h1 className="text-2xl font-bold text-foreground">
             Merci pour votre commande !

@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
-import { Search, X } from "lucide-react";
+import { MagnifyingGlass, X } from "@phosphor-icons/react";
 
 import SiteLayout from "../components/site/SiteLayout";
 import ProductCard from "../components/site/ProductCard";
@@ -71,7 +71,7 @@ export default function Products() {
         </p>
 
         <div className="mt-6 flex items-center gap-2 rounded-full border border-input bg-card px-4 py-2.5 sm:max-w-sm">
-          <Search size={16} className="shrink-0 text-muted-foreground" />
+          <MagnifyingGlass size={16} className="shrink-0 text-muted-foreground" />
           <input
             type="text"
             value={searchTerm}
