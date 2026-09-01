@@ -1,4 +1,4 @@
-import { existsSync } from "node:fs";
+import { createReadStream, existsSync } from "node:fs";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
@@ -113,7 +113,37 @@ function renderRobots(pages: PageMeta[]) {
 function seo(): Plugin {
   return {
     name: "thedogmall:seo",
-    apply: "build",
+
+    /**
+     * `vite preview` renvoie `index.html` pour toute URL sans extension :
+     * les fichiers pré-générés ne seraient jamais servis, et le site testé
+     * en local ne correspondrait pas à celui mis en ligne. On regarde donc
+     * d'abord si la page existe sur le disque, comme le font Vercel et
+     * Netlify avant d'appliquer leur redirection.
+     */
+    configurePreviewServer(server) {
+      const outDir = path.resolve("dist");
+
+      server.middlewares.use((req, res, next) => {
+        const pathname = (req.url ?? "/").split("?")[0];
+
+        if (pathname === "/" || path.extname(pathname)) {
+          next();
+          return;
+        }
+
+        const candidate = path.join(outDir, pathname, "index.html");
+
+        if (!candidate.startsWith(outDir) || !existsSync(candidate)) {
+          next();
+          return;
+        }
+
+        res.setHeader("Content-Type", "text/html; charset=utf-8");
+        createReadStream(candidate).pipe(res);
+      });
+    },
+
     async closeBundle() {
       const outDir = path.resolve("dist");
       const publicDir = path.resolve("public");

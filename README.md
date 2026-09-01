@@ -37,8 +37,26 @@ Les anciennes URL `/produits` et `/produits/:id` redirigent vers
 npm install
 npm run dev     # serveur de développement
 npm run build   # typage + build de production
+npm run preview # sert le résultat du build, comme en ligne
 npm run lint    # oxlint
 ```
+
+### Tester depuis un téléphone
+
+Ajoutez `-- --host` pour que le serveur écoute sur le réseau local :
+
+```bash
+npm run dev -- --host        # ou : npm run preview -- --host
+```
+
+Vite affiche alors une adresse « Network » du type
+`http://192.168.1.24:5173/`. Ouvrez-la depuis un téléphone connecté au
+même Wi-Fi.
+
+`npm run dev` suffit pour parcourir le site. Pour vérifier le
+référencement (titres, aperçus de partage, sitemap), passez par
+`npm run build` puis `npm run preview` : ce sont les fichiers pré-générés
+qui sont alors servis, exactement comme en ligne.
 
 ## Photos
 
@@ -78,6 +96,13 @@ HTML par page (`dist/chiens/roy/index.html`…) avec ses propres balises
 `head`, ses données structurées JSON-LD, plus `sitemap.xml` et
 `robots.txt`. Vercel comme Netlify servent ces fichiers avant d'appliquer
 la redirection vers `index.html`, sans configuration supplémentaire.
+
+Le même plugin fait en sorte que `npm run preview` se comporte de la même
+façon : sans lui, le serveur de prévisualisation de Vite renverrait la
+page d'accueil pour toutes les URL profondes et le travail ne serait pas
+vérifiable en local. Pour contrôler une page, ouvrez son code source
+(`curl http://localhost:4173/chiens/roy` ou « Afficher la source » dans le
+navigateur) : le titre et les balises doivent être ceux de la page.
 
 Les textes de chaque page sont regroupés dans `src/lib/seo.ts`. **Le nom
 de domaine y est codé en dur** (`SITE_URL`) : c'est la première chose à
