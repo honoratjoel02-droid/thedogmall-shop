@@ -2,18 +2,24 @@ import { Link, Navigate, useParams } from "react-router-dom";
 import {
   CheckCircle,
   MapPin,
+  PawPrint,
   Phone,
   type Icon,
 } from "@phosphor-icons/react";
 
 import SiteLayout from "../components/site/SiteLayout";
-import DogImage from "../components/site/DogImage";
+import MediaGallery from "../components/site/MediaGallery";
+import MediaFallback from "../components/site/MediaFallback";
 import DogCard from "../components/site/DogCard";
 import FavoriteButton from "../components/site/FavoriteButton";
+import WhatsAppButton from "../components/site/WhatsAppButton";
 import { buttonVariants } from "../components/ui/button";
 import { dogs, findDog } from "../data/dogs";
 import { formatAge, formatPrice } from "../lib/format";
-import { contactDetails } from "../lib/navigation";
+import { dogPhotos } from "../lib/media";
+import { dogMeta } from "../lib/seo";
+import { contactDetails } from "../lib/contact";
+import { dogMessage } from "../lib/whatsapp";
 import { cn } from "../lib/utils";
 
 export default function DogDetail() {
@@ -35,7 +41,7 @@ export default function DogDetail() {
   ];
 
   return (
-    <SiteLayout>
+    <SiteLayout meta={dogMeta(dog)}>
       <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:py-12">
         <nav aria-label="Fil d'Ariane" className="mb-6 text-sm text-muted-foreground">
           <Link to="/chiens" className="transition-colors hover:text-foreground">
@@ -49,10 +55,18 @@ export default function DogDetail() {
 
         <div className="grid gap-10 lg:grid-cols-2">
           <div className="relative">
-            <DogImage
-              dog={dog}
-              className="aspect-4/5 w-full rounded-3xl"
-              iconSize={96}
+            <MediaGallery
+              photos={dogPhotos(dog)}
+              alt={`${dog.name}, ${dog.breed}`}
+              imageClassName="aspect-4/5 rounded-3xl"
+              fallback={
+                <MediaFallback
+                  icon={PawPrint}
+                  label={`${dog.name}, ${dog.breed}`}
+                  className="aspect-4/5 w-full rounded-3xl"
+                  iconSize={96}
+                />
+              }
             />
 
             <FavoriteButton
@@ -117,17 +131,17 @@ export default function DogDetail() {
             </dl>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link
-                to="/contact"
-                className={buttonVariants({
-                  size: "lg",
-                  className: "flex-1",
-                })}
-              >
-                {available
-                  ? `Demander à rencontrer ${dog.name}`
-                  : "Être prévenu si disponible"}
-              </Link>
+              <WhatsAppButton
+                size="lg"
+                variant="default"
+                className="flex-1"
+                message={dogMessage(dog)}
+                label={
+                  available
+                    ? `Demander à rencontrer ${dog.name}`
+                    : "Être prévenu si disponible"
+                }
+              />
 
               <a
                 href={contactDetails.phoneHref}
@@ -140,6 +154,17 @@ export default function DogDetail() {
                 Appeler
               </a>
             </div>
+
+            <p className="mt-3 text-sm text-muted-foreground">
+              Vous préférez écrire ?{" "}
+              <Link
+                to="/contact"
+                className="font-medium text-primary hover:underline"
+              >
+                Utilisez le formulaire de contact
+              </Link>
+              .
+            </p>
 
             <p className="mt-3 flex items-center gap-1.5 text-sm text-muted-foreground">
               <MapPin size={15} className="shrink-0" />

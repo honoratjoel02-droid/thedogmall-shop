@@ -7,6 +7,7 @@ import DogCard from "../components/site/DogCard";
 import Reveal from "../components/site/Reveal";
 import { Button, buttonVariants } from "../components/ui/button";
 import { dogs } from "../data/dogs";
+import { pageMeta } from "../lib/seo";
 
 const filters = ["Tous", "Disponible", "Réservé"] as const;
 
@@ -28,7 +29,7 @@ export default function Dogs() {
   ).length;
 
   return (
-    <SiteLayout>
+    <SiteLayout meta={pageMeta("/chiens")}>
       <PageHeader
         eyebrow="Nos compagnons"
         title="Nos chiens disponibles"

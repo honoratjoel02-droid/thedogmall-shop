@@ -8,6 +8,7 @@ import ProductCard from "../components/site/ProductCard";
 import { Button } from "../components/ui/button";
 import { mockProducts } from "../data/mockProducts";
 import type { ProductCategory } from "../types/product";
+import { pageMeta } from "../lib/seo";
 
 /**
  * Deux entrées mènent à cette page : « Boutique », qui montre tout le
@@ -101,7 +102,9 @@ export default function Products({ universe = "boutique" }: ProductsProps) {
   const { eyebrow, title, description } = copy[universe];
 
   return (
-    <SiteLayout>
+    <SiteLayout
+      meta={pageMeta(universe === "accessoires" ? "/accessoires" : "/boutique")}
+    >
       <PageHeader
         eyebrow={eyebrow}
         title={title}

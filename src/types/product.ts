@@ -23,4 +23,9 @@ export type Product = {
   price: number;
   description: string;
   foodStage?: FoodStage;
+  /**
+   * Noms des fichiers photo dans `public/products/`, dans l'ordre
+   * d'affichage. Omis, on cherche `<id>.jpg`.
+   */
+  images?: string[];
 };

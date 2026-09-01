@@ -8,6 +8,7 @@ import Reveal from "../components/site/Reveal";
 import { Button } from "../components/ui/button";
 import { mockProducts } from "../data/mockProducts";
 import type { FoodStage } from "../types/product";
+import { pageMeta } from "../lib/seo";
 
 const stages: FoodStage[] = [
   "Chiots",
@@ -53,7 +54,7 @@ export default function Food() {
   }
 
   return (
-    <SiteLayout>
+    <SiteLayout meta={pageMeta("/alimentation")}>
       <header className="dot-grid border-b border-border bg-accent">
         <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:py-24">
           <span className="flex size-12 items-center justify-center rounded-2xl bg-card text-primary ring-1 ring-border">

@@ -3,8 +3,11 @@ import { EnvelopeSimple, Phone } from "@phosphor-icons/react";
 
 import SiteLayout from "../components/site/SiteLayout";
 import PageHeader from "../components/site/PageHeader";
+import WhatsAppLink from "../components/site/WhatsAppLink";
 import { buttonVariants } from "../components/ui/button";
-import { contactDetails } from "../lib/navigation";
+import { contactDetails } from "../lib/contact";
+import { generalMessage } from "../lib/whatsapp";
+import { pageMeta } from "../lib/seo";
 
 const deliveryRows = [
   { area: "Cocody, Riviera, Angré", delay: "Sous 24 h", cost: "2 000 FCFA" },
@@ -47,7 +50,7 @@ const faq = [
 
 export default function Help() {
   return (
-    <SiteLayout>
+    <SiteLayout meta={pageMeta("/aide")}>
       <PageHeader
         eyebrow="Assistance"
         title="Livraison, commandes et questions fréquentes"
@@ -185,6 +188,12 @@ export default function Help() {
               <EnvelopeSimple size={18} className="shrink-0 text-primary" />
               {contactDetails.email}
             </a>
+
+            <WhatsAppLink
+              message={generalMessage}
+              label="Écrire sur WhatsApp"
+              className="font-medium text-foreground hover:text-primary [&>svg]:text-primary"
+            />
           </div>
 
           <Link

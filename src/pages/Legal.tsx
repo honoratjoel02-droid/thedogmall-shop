@@ -1,6 +1,14 @@
 import SiteLayout from "../components/site/SiteLayout";
+import { pageMeta } from "../lib/seo";
+import type { StaticPath } from "../lib/seo";
 
 export type LegalPageKey = "mentions" | "confidentialite" | "cgv";
+
+const legalPaths: Record<LegalPageKey, StaticPath> = {
+  mentions: "/mentions-legales",
+  confidentialite: "/confidentialite",
+  cgv: "/cgv",
+};
 
 const pages: Record<
   LegalPageKey,
@@ -73,7 +81,7 @@ export default function Legal({ page }: LegalProps) {
   const content = pages[page];
 
   return (
-    <SiteLayout>
+    <SiteLayout meta={pageMeta(legalPaths[page])}>
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6">
         <h1 className="text-3xl font-bold tracking-tight text-foreground">
           {content.title}

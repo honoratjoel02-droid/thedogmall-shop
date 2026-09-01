@@ -7,11 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#c8202e" />
+    <!--
+      Tout ce qui est entre ces deux repères est remplacé au build par les
+      métadonnées propres à chaque page (voir le plugin `seo` de
+      vite.config.ts). Ce qui suit est le contenu par défaut, utilisé en
+      développement et pour la page d'accueil.
+    -->
+    <!-- seo:start -->
     <title>THE DOG MALL — Chiens, boutique et alimentation à Abidjan</title>
     <meta
       name="description"
       content="Chiens à adopter, accessoires et alimentation pour chien à Abidjan. Livraison sous 24 h et paiement à la livraison."
     />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://thedogmall.ci/" />
     <meta property="og:site_name" content="THE DOG MALL" />
     <meta property="og:locale" content="fr_CI" />
     <meta
@@ -23,8 +32,10 @@
       content="Chiens à adopter, accessoires et alimentation pour chien à Abidjan. Livraison sous 24 h et paiement à la livraison."
     />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="/logo.png" />
+    <meta property="og:url" content="https://thedogmall.ci/" />
+    <meta property="og:image" content="https://thedogmall.ci/logo.png" />
     <meta name="twitter:card" content="summary_large_image" />
+    <!-- seo:end -->
   </head>
   <body>
     <div id="root"></div>

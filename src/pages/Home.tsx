@@ -25,6 +25,7 @@ import { dogs } from "../data/dogs";
 import { essentialProductIds, mockProducts } from "../data/mockProducts";
 import { articles } from "../data/articles";
 import { formatArticleDate } from "../lib/format";
+import { homeMeta } from "../lib/seo";
 import type { FoodStage } from "../types/product";
 
 const universes: {
@@ -103,7 +104,7 @@ const homeArticles = articles.slice(0, 5);
 
 export default function Home() {
   return (
-    <SiteLayout>
+    <SiteLayout meta={homeMeta}>
       {/* 1. Hero */}
       <section className="border-b border-border">
         <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 pt-12 pb-16 sm:px-6 lg:grid-cols-[1.05fr_1fr] lg:pt-20 lg:pb-24">

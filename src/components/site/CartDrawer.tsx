@@ -6,7 +6,9 @@ import { useCart } from "../../hooks/useCart";
 import { buttonVariants } from "../ui/button";
 import { cn } from "../../lib/utils";
 import ProductImage from "./ProductImage";
+import WhatsAppButton from "./WhatsAppButton";
 import { formatPrice } from "../../lib/format";
+import { cartMessage } from "../../lib/whatsapp";
 
 export default function CartDrawer() {
   const {
@@ -186,6 +188,12 @@ export default function CartDrawer() {
                   Passer la commande
                 </Link>
 
+                <WhatsAppButton
+                  size="lg"
+                  className="h-11 w-full"
+                  message={cartMessage(items, subtotal)}
+                />
+
                 <Link
                   to="/panier"
                   onClick={closeDrawer}
@@ -193,7 +201,7 @@ export default function CartDrawer() {
                     buttonVariants({
                       variant: "outline",
                       size: "lg",
-                      className: "h-11 w-full",
+                      className: "h-11 w-full border-transparent bg-transparent",
                     })
                   )}
                 >

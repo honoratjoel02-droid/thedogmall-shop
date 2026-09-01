@@ -10,9 +10,12 @@ import {
 
 import SiteLayout from "../components/site/SiteLayout";
 import PageHeader from "../components/site/PageHeader";
+import WhatsAppLink from "../components/site/WhatsAppLink";
 import { useCart } from "../hooks/useCart";
 import { useFavorites } from "../hooks/useFavorites";
-import { contactDetails } from "../lib/navigation";
+import { contactDetails } from "../lib/contact";
+import { generalMessage } from "../lib/whatsapp";
+import { pageMeta } from "../lib/seo";
 
 export default function Account() {
   const { itemCount } = useCart();
@@ -51,7 +54,7 @@ export default function Account() {
   ];
 
   return (
-    <SiteLayout>
+    <SiteLayout meta={pageMeta("/compte")}>
       <PageHeader
         eyebrow="Espace client"
         title="Mon compte"
@@ -116,6 +119,12 @@ export default function Account() {
               <EnvelopeSimple size={18} className="shrink-0 text-primary" />
               {contactDetails.email}
             </a>
+
+            <WhatsAppLink
+              message={generalMessage}
+              label="Écrire sur WhatsApp"
+              className="font-medium text-foreground hover:text-primary [&>svg]:text-primary"
+            />
           </div>
         </section>
       </div>

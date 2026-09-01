@@ -3,17 +3,20 @@ import { Minus, Plus, ShoppingBag, Trash } from "@phosphor-icons/react";
 
 import SiteLayout from "../components/site/SiteLayout";
 import ProductImage from "../components/site/ProductImage";
+import WhatsAppButton from "../components/site/WhatsAppButton";
 import { buttonVariants } from "../components/ui/button";
 import { Card, CardContent } from "../components/ui/card";
 import { useCart } from "../hooks/useCart";
 import { formatPrice } from "../lib/format";
+import { cartMessage } from "../lib/whatsapp";
+import { pageMeta } from "../lib/seo";
 
 export default function Cart() {
   const { items, updateQuantity, removeItem, subtotal } = useCart();
 
   if (items.length === 0) {
     return (
-      <SiteLayout>
+      <SiteLayout meta={pageMeta("/panier")}>
         <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 px-6 py-24 text-center">
           <ShoppingBag size={56} weight="duotone" className="text-muted-foreground" />
 
@@ -37,7 +40,7 @@ export default function Cart() {
   }
 
   return (
-    <SiteLayout>
+    <SiteLayout meta={pageMeta("/panier")}>
       <div className="mx-auto max-w-6xl px-6 py-12">
         <h1 className="mb-8 text-3xl font-bold tracking-tight text-foreground">
           Votre panier
@@ -153,6 +156,12 @@ export default function Cart() {
               >
                 Passer la commande
               </Link>
+
+              <WhatsAppButton
+                size="lg"
+                className="h-10 w-full"
+                message={cartMessage(items, subtotal)}
+              />
             </CardContent>
           </Card>
         </div>

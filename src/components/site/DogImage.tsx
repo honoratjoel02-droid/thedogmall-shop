@@ -2,46 +2,42 @@ import { useState } from "react";
 import { PawPrint } from "@phosphor-icons/react";
 
 import type { Dog } from "../../types/dog";
+import { dogPhotos } from "../../lib/media";
 import { cn } from "../../lib/utils";
+import MediaFallback from "./MediaFallback";
 
 type DogImageProps = {
-  dog: Pick<Dog, "id" | "name" | "breed">;
+  dog: Pick<Dog, "id" | "name" | "breed" | "images">;
   className?: string;
   iconSize?: number;
 };
 
-/**
- * Photo du chien, servie depuis `public/dogs/<id>.jpg`. Tant qu'une photo
- * n'a pas été déposée, on affiche un aplat de marque plutôt qu'une image
- * cassée.
- */
+/** Première photo du chien, pour les cartes de liste. */
 export default function DogImage({
   dog,
   className,
   iconSize = 48,
 }: DogImageProps) {
   const [failed, setFailed] = useState(false);
+  const [photo] = dogPhotos(dog);
 
   if (failed) {
     return (
-      <div
-        role="img"
-        aria-label={`${dog.name}, ${dog.breed}, photo à venir`}
-        className={cn(
-          "media-fallback flex items-center justify-center text-primary/60",
-          className
-        )}
-      >
-        <PawPrint size={iconSize} weight="duotone" />
-      </div>
+      <MediaFallback
+        icon={PawPrint}
+        label={`${dog.name}, ${dog.breed}`}
+        className={className}
+        iconSize={iconSize}
+      />
     );
   }
 
   return (
     <img
-      src={`/dogs/${dog.id}.jpg`}
+      src={photo}
       alt={`${dog.name}, ${dog.breed}`}
       loading="lazy"
+      decoding="async"
       onError={() => setFailed(true)}
       className={cn("media-fallback object-cover", className)}
     />

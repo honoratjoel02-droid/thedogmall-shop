@@ -9,6 +9,7 @@ import { buttonVariants } from "../components/ui/button";
 import { useFavorites } from "../hooks/useFavorites";
 import { dogs } from "../data/dogs";
 import { mockProducts } from "../data/mockProducts";
+import { pageMeta } from "../lib/seo";
 
 export default function Favorites() {
   const { favorites, favoriteCount } = useFavorites();
@@ -22,7 +23,7 @@ export default function Favorites() {
   );
 
   return (
-    <SiteLayout>
+    <SiteLayout meta={pageMeta("/favoris")}>
       <PageHeader
         eyebrow="Ma sélection"
         title="Mes favoris"

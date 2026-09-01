@@ -4,12 +4,18 @@ import { Minus, Plus } from "@phosphor-icons/react";
 
 import SiteLayout from "../components/site/SiteLayout";
 import ProductCard from "../components/site/ProductCard";
-import ProductImage from "../components/site/ProductImage";
+import MediaGallery from "../components/site/MediaGallery";
+import MediaFallback from "../components/site/MediaFallback";
 import FavoriteButton from "../components/site/FavoriteButton";
+import WhatsAppButton from "../components/site/WhatsAppButton";
 import { Button } from "../components/ui/button";
 import { useCart } from "../hooks/useCart";
 import { mockProducts } from "../data/mockProducts";
 import { formatPrice } from "../lib/format";
+import { productMessage } from "../lib/whatsapp";
+import { productPhotos } from "../lib/media";
+import { productMeta } from "../lib/seo";
+import { categoryIcons } from "../lib/categoryIcons";
 
 export default function ProductDetail() {
   const { productId } = useParams();
@@ -35,7 +41,7 @@ export default function ProductDetail() {
   };
 
   return (
-    <SiteLayout>
+    <SiteLayout meta={productMeta(product)}>
       <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:py-12">
         <nav
           aria-label="Fil d'Ariane"
@@ -55,10 +61,18 @@ export default function ProductDetail() {
 
         <div className="grid gap-10 md:grid-cols-2">
           <div className="relative">
-            <ProductImage
-              product={product}
-              className="aspect-square w-full rounded-3xl"
-              iconSize={96}
+            <MediaGallery
+              photos={productPhotos(product)}
+              alt={product.name}
+              imageClassName="aspect-square rounded-3xl"
+              fallback={
+                <MediaFallback
+                  icon={categoryIcons[product.category]}
+                  label={product.name}
+                  className="aspect-square w-full rounded-3xl"
+                  iconSize={96}
+                />
+              }
             />
 
             <FavoriteButton
@@ -123,6 +137,16 @@ export default function ProductDetail() {
                 Ajouter au panier
               </Button>
             </div>
+
+            <WhatsAppButton
+              size="lg"
+              className="mt-3 h-10 w-full"
+              message={productMessage(product)}
+            />
+
+            <p className="mt-3 text-sm text-muted-foreground">
+              Livraison sous 24 h à Abidjan, paiement à la livraison.
+            </p>
           </div>
         </div>
 

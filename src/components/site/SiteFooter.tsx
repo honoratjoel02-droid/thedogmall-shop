@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import { EnvelopeSimple, MapPin, Phone } from "@phosphor-icons/react";
 
-import { contactDetails, footerNav } from "../../lib/navigation";
+import { footerNav } from "../../lib/navigation";
+import { contactDetails } from "../../lib/contact";
+import { generalMessage } from "../../lib/whatsapp";
+import WhatsAppLink from "./WhatsAppLink";
 import Logo from "./Logo";
 
 const columns = [
@@ -65,6 +68,14 @@ export default function SiteFooter() {
                 <EnvelopeSimple size={16} className="mt-0.5 shrink-0" />
                 {contactDetails.email}
               </a>
+            </li>
+
+            <li>
+              <WhatsAppLink
+                message={generalMessage}
+                className="items-start gap-2 hover:text-foreground [&>svg]:mt-0.5"
+                iconSize={16}
+              />
             </li>
 
             <li className="flex items-start gap-2">

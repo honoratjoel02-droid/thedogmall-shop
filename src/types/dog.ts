@@ -19,4 +19,9 @@ export type Dog = {
   /** Ce qui est fourni avec le chien (carnet, vaccins, puce...). */
   included: string[];
   location: string;
+  /**
+   * Noms des fichiers photo dans `public/dogs/`, dans l'ordre d'affichage.
+   * Omis, on cherche `<id>.jpg`.
+   */
+  images?: string[];
 };

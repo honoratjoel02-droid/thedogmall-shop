@@ -1,5 +1,7 @@
 import type { ReactNode } from "react";
 
+import type { PageMeta } from "../../lib/seo";
+import Seo from "./Seo";
 import SiteHeader from "./SiteHeader";
 import SiteFooter from "./SiteFooter";
 import PromoBanner from "./PromoBanner";
@@ -9,13 +11,16 @@ import ScrollManager from "./ScrollManager";
 
 type SiteLayoutProps = {
   children: ReactNode;
+  /** Métadonnées de la page, appliquées à chaque navigation interne. */
+  meta?: PageMeta;
 };
 
-export default function SiteLayout({ children }: SiteLayoutProps) {
+export default function SiteLayout({ children, meta }: SiteLayoutProps) {
   return (
     // `pb-16` réserve la hauteur de la barre d'onglets mobile, fixée en bas.
     <div className="flex min-h-[100dvh] flex-col bg-background pb-16 lg:pb-0">
       <ScrollManager />
+      {meta && <Seo meta={meta} />}
 
       <a
         href="#contenu"

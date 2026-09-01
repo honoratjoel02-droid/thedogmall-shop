@@ -2,12 +2,15 @@ import { useState, type FormEvent } from "react";
 import { CheckCircle, EnvelopeSimple, MapPin, Phone } from "@phosphor-icons/react";
 
 import SiteLayout from "../components/site/SiteLayout";
-import { contactDetails } from "../lib/navigation";
+import WhatsAppLink from "../components/site/WhatsAppLink";
+import { contactDetails } from "../lib/contact";
+import { generalMessage } from "../lib/whatsapp";
 import { Button } from "../components/ui/button";
 import { Card, CardContent } from "../components/ui/card";
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import { Textarea } from "../components/ui/textarea";
+import { pageMeta } from "../lib/seo";
 
 export default function Contact() {
   const [sent, setSent] = useState(false);
@@ -18,7 +21,7 @@ export default function Contact() {
   }
 
   return (
-    <SiteLayout>
+    <SiteLayout meta={pageMeta("/contact")}>
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
         <h1 className="text-3xl font-bold tracking-tight text-foreground">
           Contactez-nous
@@ -116,6 +119,12 @@ export default function Contact() {
                 <Phone size={18} className="mt-0.5 shrink-0 text-primary" />
                 {contactDetails.phone}
               </a>
+
+              <WhatsAppLink
+                message={generalMessage}
+                label="Écrire sur WhatsApp"
+                className="gap-3 text-sm text-muted-foreground hover:text-foreground [&>svg]:text-primary"
+              />
 
               <div className="flex items-start gap-3 text-sm text-muted-foreground">
                 <MapPin size={18} className="mt-0.5 shrink-0 text-primary" />

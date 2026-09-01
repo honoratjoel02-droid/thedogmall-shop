@@ -4,6 +4,7 @@ import { Heart, PawPrint, Truck } from "@phosphor-icons/react";
 import SiteLayout from "../components/site/SiteLayout";
 import Reveal from "../components/site/Reveal";
 import { buttonVariants } from "../components/ui/button";
+import { pageMeta } from "../lib/seo";
 
 const values = [
   {
@@ -28,7 +29,7 @@ const values = [
 
 export default function About() {
   return (
-    <SiteLayout>
+    <SiteLayout meta={pageMeta("/a-propos")}>
       <section className="border-b border-border">
         <div className="mx-auto max-w-3xl px-4 pt-16 pb-16 sm:px-6 lg:pt-24">
           <h1 className="text-4xl font-bold tracking-tight text-balance text-foreground sm:text-5xl">

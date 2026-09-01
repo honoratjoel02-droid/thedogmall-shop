@@ -3,12 +3,15 @@ import { Link, Navigate } from "react-router-dom";
 import { CheckCircle } from "@phosphor-icons/react";
 
 import SiteLayout from "../components/site/SiteLayout";
+import WhatsAppButton from "../components/site/WhatsAppButton";
 import { Button, buttonVariants } from "../components/ui/button";
 import { Card, CardContent } from "../components/ui/card";
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import { useCart } from "../hooks/useCart";
 import { formatPrice } from "../lib/format";
+import { cartMessage } from "../lib/whatsapp";
+import { pageMeta } from "../lib/seo";
 
 export default function Checkout() {
   const { items, subtotal, clearCart } = useCart();
@@ -24,7 +27,7 @@ export default function Checkout() {
 
   if (orderPlaced) {
     return (
-      <SiteLayout>
+      <SiteLayout meta={pageMeta("/commande")}>
         <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 px-6 py-24 text-center">
           <CheckCircle size={56} weight="duotone" className="text-primary" />
 
@@ -54,7 +57,7 @@ export default function Checkout() {
   }
 
   return (
-    <SiteLayout>
+    <SiteLayout meta={pageMeta("/commande")}>
       <div className="mx-auto max-w-6xl px-6 py-12">
         <h1 className="mb-8 text-3xl font-bold tracking-tight text-foreground">
           Finaliser la commande
@@ -156,6 +159,19 @@ export default function Checkout() {
             <Button type="submit" size="lg" className="h-11">
               Confirmer la commande
             </Button>
+
+            <div className="flex flex-col items-start gap-3 border-t border-border pt-6">
+              <p className="text-sm text-muted-foreground">
+                Vous préférez commander directement ? Envoyez-nous votre
+                panier sur WhatsApp, nous reprenons la suite avec vous.
+              </p>
+
+              <WhatsAppButton
+                size="lg"
+                className="h-11"
+                message={cartMessage(items, subtotal)}
+              />
+            </div>
           </form>
 
           <Card className="h-fit shadow-sm">

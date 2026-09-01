@@ -4,6 +4,7 @@ import { ArrowLeft } from "@phosphor-icons/react";
 import SiteLayout from "../components/site/SiteLayout";
 import { articles, findArticle } from "../data/articles";
 import { formatArticleDate } from "../lib/format";
+import { articleMeta } from "../lib/seo";
 
 export default function ArticleDetail() {
   const { articleId } = useParams();
@@ -18,7 +19,7 @@ export default function ArticleDetail() {
     .slice(0, 3);
 
   return (
-    <SiteLayout>
+    <SiteLayout meta={articleMeta(article)}>
       <article className="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:py-16">
         <Link
           to="/conseils"

@@ -55,10 +55,3 @@ export const footerNav = {
     { label: "Mentions légales", to: "/mentions-legales" },
   ],
 };
-
-export const contactDetails = {
-  phone: "+225 07 58 42 19 03",
-  phoneHref: "tel:+2250758421903",
-  email: "contact@thedogmall.ci",
-  address: "Abidjan, Côte d'Ivoire",
-};

@@ -6,12 +6,13 @@ import PageHeader from "../components/site/PageHeader";
 import Reveal from "../components/site/Reveal";
 import { articles } from "../data/articles";
 import { formatArticleDate } from "../lib/format";
+import { pageMeta } from "../lib/seo";
 
 export default function Advice() {
   const [lead, ...rest] = articles;
 
   return (
-    <SiteLayout>
+    <SiteLayout meta={pageMeta("/conseils")}>
       <PageHeader
         eyebrow="Conseils & actualités"
         title="Comprendre son chien, choisir ce qui lui convient"
