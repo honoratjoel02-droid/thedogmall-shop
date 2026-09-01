@@ -85,6 +85,37 @@
   }
 }
 
+@layer components {
+  /*
+   * Aplat de remplacement affiché tant qu'une photo produit ou chien n'a
+   * pas été déposée dans `public/`. Deux halos décentrés pour éviter le
+   * rectangle gris uniforme.
+   */
+  .media-fallback {
+    background-color: var(--secondary);
+    background-image:
+      radial-gradient(
+        circle at 28% 22%,
+        color-mix(in oklab, var(--primary) 14%, transparent),
+        transparent 55%
+      ),
+      radial-gradient(
+        circle at 78% 82%,
+        color-mix(in oklab, var(--foreground) 8%, transparent),
+        transparent 60%
+      );
+  }
+
+  /* Trame de points discrète, utilisée derrière le hero et la bannière. */
+  .dot-grid {
+    background-image: radial-gradient(
+      color-mix(in oklab, var(--foreground) 10%, transparent) 1px,
+      transparent 1px
+    );
+    background-size: 22px 22px;
+  }
+}
+
 @keyframes reveal-in {
   from {
     opacity: 0;

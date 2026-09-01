@@ -13,7 +13,7 @@ const pages: Record<
     sections: [
       {
         heading: "Éditeur du site",
-        body: "Raison sociale, forme juridique, capital social, adresse du siège, numéro SIRET et numéro de TVA intracommunautaire à compléter.",
+        body: "Raison sociale, forme juridique, capital social, adresse du siège à Abidjan, numéro de registre du commerce (RCCM) et numéro de compte contribuable à compléter.",
       },
       {
         heading: "Directeur de la publication",
@@ -40,26 +40,26 @@ const pages: Record<
       },
       {
         heading: "Vos droits",
-        body: "Vous pouvez demander l'accès, la rectification ou la suppression de vos données en écrivant à contact@thedogmall.fr. Durée de conservation à préciser.",
+        body: "Vous pouvez demander l'accès, la rectification ou la suppression de vos données en écrivant à contact@thedogmall.ci. Durée de conservation à préciser.",
       },
     ],
   },
   cgv: {
     title: "Conditions générales de vente",
     intro:
-      "Conditions applicables aux commandes passées sur TheDogMall.",
+      "Conditions applicables aux commandes passées sur THE DOG MALL.",
     sections: [
       {
         heading: "Commandes et paiement",
-        body: "Les commandes ne sont pas réglées en ligne pour le moment : nous contactons chaque client après validation du panier pour organiser le paiement.",
+        body: "Les commandes ne sont pas réglées en ligne pour le moment : nous appelons chaque client après validation du panier pour organiser le paiement, en espèces à la livraison ou par mobile money.",
       },
       {
         heading: "Livraison",
-        body: "Expédition sous 24h ouvrées, livraison en France métropolitaine sous 2 à 3 jours ouvrés. Frais offerts dès 50 € d'achat. Transporteur et tarifs détaillés à compléter.",
+        body: "Livraison dans les communes d'Abidjan sous 24 h ouvrées. Pour les autres villes, la livraison passe par un transporteur partenaire et le délai est confirmé lors de l'appel. Grille tarifaire détaillée à compléter.",
       },
       {
         heading: "Retours et remboursement",
-        body: "Retour accepté pendant 30 jours après réception, produit non ouvert. Remboursement sous 7 jours après réception du colis retourné. Modalités de prise en charge des frais de retour à compléter.",
+        body: "Retour accepté pendant 14 jours après réception, produit non ouvert et dans son emballage d'origine. Remboursement sous 7 jours après récupération du colis. Prise en charge des frais de retour à préciser. Les chiens ne sont pas concernés par ce droit de retour : leur cession fait l'objet d'un accord écrit signé au moment de la remise.",
       },
     ],
   },
@@ -74,7 +74,7 @@ export default function Legal({ page }: LegalProps) {
 
   return (
     <SiteLayout>
-      <div className="mx-auto max-w-2xl px-6 py-16">
+      <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6">
         <h1 className="text-3xl font-bold tracking-tight text-foreground">
           {content.title}
         </h1>

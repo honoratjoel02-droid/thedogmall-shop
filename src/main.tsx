@@ -6,11 +6,14 @@ import "./index.css";
 
 import { router } from "./router";
 import { CartProvider } from "./context/CartContext";
+import { FavoritesProvider } from "./context/FavoritesContext";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <CartProvider>
-      <RouterProvider router={router} />
-    </CartProvider>
+    <FavoritesProvider>
+      <CartProvider>
+        <RouterProvider router={router} />
+      </CartProvider>
+    </FavoritesProvider>
   </StrictMode>
 );

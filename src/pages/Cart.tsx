@@ -6,6 +6,7 @@ import ProductImage from "../components/site/ProductImage";
 import { buttonVariants } from "../components/ui/button";
 import { Card, CardContent } from "../components/ui/card";
 import { useCart } from "../hooks/useCart";
+import { formatPrice } from "../lib/format";
 
 export default function Cart() {
   const { items, updateQuantity, removeItem, subtotal } = useCart();
@@ -25,7 +26,7 @@ export default function Cart() {
           </p>
 
           <Link
-            to="/produits"
+            to="/boutique"
             className={buttonVariants({ className: "mt-2" })}
           >
             Voir les produits
@@ -48,7 +49,7 @@ export default function Cart() {
               <Card key={item.product.id} className="shadow-sm">
                 <CardContent className="flex items-center gap-4">
                   <Link
-                    to={`/produits/${item.product.id}`}
+                    to={`/boutique/${item.product.id}`}
                     className="block size-20 shrink-0 overflow-hidden rounded-2xl"
                   >
                     <ProductImage
@@ -60,14 +61,14 @@ export default function Cart() {
 
                   <div className="flex-1">
                     <Link
-                      to={`/produits/${item.product.id}`}
+                      to={`/boutique/${item.product.id}`}
                       className="font-semibold text-foreground hover:text-primary"
                     >
                       {item.product.name}
                     </Link>
 
                     <p className="text-sm text-muted-foreground">
-                      {item.product.price.toFixed(2)} € / unité
+                      {formatPrice(item.product.price)} / unité
                     </p>
                   </div>
 
@@ -106,7 +107,7 @@ export default function Cart() {
                   </div>
 
                   <span className="w-20 text-right font-semibold text-foreground">
-                    {(item.product.price * item.quantity).toFixed(2)} €
+                    {formatPrice(item.product.price * item.quantity)}
                   </span>
 
                   <button
@@ -130,7 +131,7 @@ export default function Cart() {
 
               <div className="flex items-center justify-between text-sm text-muted-foreground">
                 <span>Sous-total</span>
-                <span>{subtotal.toFixed(2)} €</span>
+                <span>{formatPrice(subtotal)}</span>
               </div>
 
               <div className="flex items-center justify-between text-sm text-muted-foreground">
@@ -140,7 +141,7 @@ export default function Cart() {
 
               <div className="flex items-center justify-between border-t border-border pt-4 text-base font-bold text-foreground">
                 <span>Total</span>
-                <span>{subtotal.toFixed(2)} €</span>
+                <span>{formatPrice(subtotal)}</span>
               </div>
 
               <Link

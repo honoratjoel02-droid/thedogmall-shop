@@ -3,12 +3,20 @@ import { useSearchParams } from "react-router-dom";
 import { MagnifyingGlass, X } from "@phosphor-icons/react";
 
 import SiteLayout from "../components/site/SiteLayout";
+import PageHeader from "../components/site/PageHeader";
 import ProductCard from "../components/site/ProductCard";
 import { Button } from "../components/ui/button";
 import { mockProducts } from "../data/mockProducts";
 import type { ProductCategory } from "../types/product";
 
-const categories: ProductCategory[] = [
+/**
+ * Deux entrées mènent à cette page : « Boutique », qui montre tout le
+ * catalogue, et « Accessoires », qui masque le rayon alimentation traité
+ * par sa propre page.
+ */
+export type ShopUniverse = "boutique" | "accessoires";
+
+const allCategories: ProductCategory[] = [
   "Alimentation",
   "Jouets",
   "Laisses & Colliers",
@@ -16,15 +24,48 @@ const categories: ProductCategory[] = [
   "Accessoires",
 ];
 
-export default function Products() {
+const copy: Record<
+  ShopUniverse,
+  { eyebrow: string; title: string; description: string }
+> = {
+  boutique: {
+    eyebrow: "Boutique",
+    title: "Tout le catalogue",
+    description:
+      "Alimentation, couchage, laisses, jouets et hygiène : les références que nous utilisons et recommandons au quotidien.",
+  },
+  accessoires: {
+    eyebrow: "Accessoires",
+    title: "Tout ce qu'il faut pour son quotidien",
+    description:
+      "Couchage, promenade, jeu et toilettage. Le rayon alimentation a sa propre page.",
+  },
+};
+
+type ProductsProps = {
+  universe?: ShopUniverse;
+};
+
+export default function Products({ universe = "boutique" }: ProductsProps) {
   const [searchParams, setSearchParams] = useSearchParams();
   const activeCategory = searchParams.get("categorie");
   const searchTerm = searchParams.get("recherche") ?? "";
+
+  const categories = useMemo(
+    () =>
+      universe === "accessoires"
+        ? allCategories.filter((category) => category !== "Alimentation")
+        : allCategories,
+    [universe]
+  );
 
   const products = useMemo(() => {
     const term = searchTerm.trim().toLowerCase();
 
     return mockProducts.filter((product) => {
+      const inUniverse =
+        universe === "boutique" || product.category !== "Alimentation";
+
       const matchesCategory =
         !activeCategory || product.category === activeCategory;
 
@@ -33,9 +74,9 @@ export default function Products() {
         product.name.toLowerCase().includes(term) ||
         product.description.toLowerCase().includes(term);
 
-      return matchesCategory && matchesSearch;
+      return inUniverse && matchesCategory && matchesSearch;
     });
-  }, [activeCategory, searchTerm]);
+  }, [activeCategory, searchTerm, universe]);
 
   function selectCategory(category: string | null) {
     const next = new URLSearchParams(searchParams);
@@ -57,24 +98,24 @@ export default function Products() {
     setSearchParams(next);
   }
 
+  const { eyebrow, title, description } = copy[universe];
+
   return (
     <SiteLayout>
-      <div className="mx-auto max-w-6xl px-6 py-12">
-        <h1 className="text-3xl font-bold tracking-tight text-foreground">
-          Nos produits
-        </h1>
-
-        <p className="mt-1 text-muted-foreground">
-          {products.length} produit{products.length > 1 ? "s" : ""}
-          {activeCategory ? ` dans « ${activeCategory} »` : ""}
-          {searchTerm ? ` pour « ${searchTerm} »` : ""}
-        </p>
-
-        <div className="mt-6 flex items-center gap-2 rounded-full border border-input bg-card px-4 py-2.5 sm:max-w-sm">
-          <MagnifyingGlass size={16} className="shrink-0 text-muted-foreground" />
+      <PageHeader
+        eyebrow={eyebrow}
+        title={title}
+        description={description}
+      >
+        <div className="mt-8 flex items-center gap-2 rounded-full border border-input bg-background px-4 py-2.5 sm:max-w-sm">
+          <MagnifyingGlass
+            size={16}
+            className="shrink-0 text-muted-foreground"
+          />
           <input
             type="text"
             value={searchTerm}
+            aria-label="Rechercher un produit"
             onChange={(event) => updateSearch(event.target.value)}
             placeholder="Rechercher un produit..."
             className="w-full bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground"
@@ -83,7 +124,7 @@ export default function Products() {
             <button
               type="button"
               aria-label="Effacer la recherche"
-              className="shrink-0 text-muted-foreground hover:text-foreground"
+              className="shrink-0 text-muted-foreground transition-colors hover:text-foreground"
               onClick={() => updateSearch("")}
             >
               <X size={16} />
@@ -95,6 +136,7 @@ export default function Products() {
           <Button
             variant={activeCategory ? "outline" : "default"}
             size="sm"
+            aria-pressed={!activeCategory}
             onClick={() => selectCategory(null)}
           >
             Tous
@@ -103,26 +145,45 @@ export default function Products() {
           {categories.map((category) => (
             <Button
               key={category}
-              variant={
-                activeCategory === category ? "default" : "outline"
-              }
+              variant={activeCategory === category ? "default" : "outline"}
               size="sm"
+              aria-pressed={activeCategory === category}
               onClick={() => selectCategory(category)}
             >
               {category}
             </Button>
           ))}
         </div>
+      </PageHeader>
+
+      <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:py-16">
+        <p className="text-sm text-muted-foreground" aria-live="polite">
+          {products.length} produit{products.length > 1 ? "s" : ""}
+          {activeCategory ? ` dans « ${activeCategory} »` : ""}
+          {searchTerm ? ` pour « ${searchTerm} »` : ""}
+        </p>
 
         {products.length > 0 ? (
-          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="mt-8 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {products.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
         ) : (
-          <div className="mt-8 rounded-2xl border border-dashed border-border bg-card/50 py-20 text-center text-muted-foreground">
-            Aucun produit ne correspond à votre recherche.
+          <div className="mt-8 rounded-3xl border border-dashed border-border py-20 text-center">
+            <p className="font-medium text-foreground">
+              Aucun produit ne correspond à votre recherche.
+            </p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Essayez un autre mot, ou revenez à tout le catalogue.
+            </p>
+            <Button
+              variant="outline"
+              className="mt-5"
+              onClick={() => setSearchParams(new URLSearchParams())}
+            >
+              Réinitialiser les filtres
+            </Button>
           </div>
         )}
       </div>

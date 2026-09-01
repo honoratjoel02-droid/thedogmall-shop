@@ -10,7 +10,7 @@ const values = [
     icon: PawPrint,
     title: "Fondé par des maîtres",
     description:
-      "TheDogMall est né dans un salon, entre deux chiens qui réclamaient leur gamelle. Nous achetons ce que nous donnons aux nôtres.",
+      "THE DOG MALL est né à Abidjan, entre deux chiens qui réclamaient leur gamelle. Nous vendons ce que nous donnons aux nôtres.",
   },
   {
     icon: Heart,
@@ -30,7 +30,7 @@ export default function About() {
   return (
     <SiteLayout>
       <section className="border-b border-border">
-        <div className="mx-auto max-w-3xl px-6 pt-16 pb-16 lg:pt-24">
+        <div className="mx-auto max-w-3xl px-4 pt-16 pb-16 sm:px-6 lg:pt-24">
           <h1 className="text-4xl font-bold tracking-tight text-balance text-foreground sm:text-5xl">
             Une boutique tenue par des gens qui ont un chien
           </h1>
@@ -43,7 +43,7 @@ export default function About() {
       </section>
 
       <Reveal>
-        <section className="mx-auto max-w-3xl px-6 py-16">
+        <section className="mx-auto max-w-3xl px-4 py-16 sm:px-6">
           <ul className="grid gap-10">
             {values.map((value) => {
               const Icon = value.icon;
@@ -75,16 +75,16 @@ export default function About() {
 
       <Reveal>
         <section className="border-t border-border bg-card">
-          <div className="mx-auto flex max-w-3xl flex-col items-start gap-5 px-6 py-16">
+          <div className="mx-auto flex max-w-3xl flex-col items-start gap-5 px-4 py-16 sm:px-6">
             <h2 className="text-2xl font-bold tracking-tight text-foreground">
               Prêt à gâter votre chien ?
             </h2>
 
             <Link
-              to="/produits"
+              to="/boutique"
               className={buttonVariants({ size: "lg" })}
             >
-              Voir le catalogue
+              Voir la boutique
             </Link>
           </div>
         </section>

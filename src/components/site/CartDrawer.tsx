@@ -6,6 +6,7 @@ import { useCart } from "../../hooks/useCart";
 import { buttonVariants } from "../ui/button";
 import { cn } from "../../lib/utils";
 import ProductImage from "./ProductImage";
+import { formatPrice } from "../../lib/format";
 
 export default function CartDrawer() {
   const {
@@ -72,7 +73,7 @@ export default function CartDrawer() {
               Votre panier est vide
             </p>
             <Link
-              to="/produits"
+              to="/boutique"
               onClick={closeDrawer}
               className={buttonVariants({ className: "mt-2" })}
             >
@@ -89,7 +90,7 @@ export default function CartDrawer() {
                     className="flex items-center gap-3"
                   >
                     <Link
-                      to={`/produits/${item.product.id}`}
+                      to={`/boutique/${item.product.id}`}
                       onClick={closeDrawer}
                       className="block size-16 shrink-0 overflow-hidden rounded-xl"
                     >
@@ -102,7 +103,7 @@ export default function CartDrawer() {
 
                     <div className="min-w-0 flex-1">
                       <Link
-                        to={`/produits/${item.product.id}`}
+                        to={`/boutique/${item.product.id}`}
                         onClick={closeDrawer}
                         className="truncate text-sm font-semibold text-foreground hover:text-primary"
                       >
@@ -110,7 +111,7 @@ export default function CartDrawer() {
                       </Link>
 
                       <p className="text-sm text-muted-foreground">
-                        {item.product.price.toFixed(2)} €
+                        {formatPrice(item.product.price)}
                       </p>
 
                       <div className="mt-1.5 flex items-center rounded-lg border border-input">
@@ -150,7 +151,7 @@ export default function CartDrawer() {
 
                     <div className="flex flex-col items-end gap-2">
                       <span className="text-sm font-semibold text-foreground">
-                        {(item.product.price * item.quantity).toFixed(2)} €
+                        {formatPrice(item.product.price * item.quantity)}
                       </span>
 
                       <button
@@ -170,7 +171,7 @@ export default function CartDrawer() {
             <div className="border-t border-border p-5">
               <div className="mb-4 flex items-center justify-between text-base font-bold text-foreground">
                 <span>Sous-total</span>
-                <span>{subtotal.toFixed(2)} €</span>
+                <span>{formatPrice(subtotal)}</span>
               </div>
 
               <div className="flex flex-col gap-2">

@@ -1,0 +1,181 @@
+export type ArticleSection = {
+  heading: string;
+  paragraphs: string[];
+};
+
+export type Article = {
+  id: string;
+  title: string;
+  excerpt: string;
+  category: string;
+  publishedAt: string;
+  readingMinutes: number;
+  sections: ArticleSection[];
+};
+
+export const articles: Article[] = [
+  {
+    id: "choisir-alimentation",
+    title: "Comment choisir l'alimentation de son chien ?",
+    excerpt:
+      "Âge, taille, niveau d'activité : les trois critères qui décident vraiment de ce qu'il y a dans la gamelle.",
+    category: "Alimentation",
+    publishedAt: "2026-08-19",
+    readingMinutes: 5,
+    sections: [
+      {
+        heading: "Commencez par l'âge, pas par la marque",
+        paragraphs: [
+          "Un chiot en croissance a besoin de plus de protéines et de calcium qu'un adulte, et d'un rapport phosphocalcique contrôlé pour que ses articulations suivent la prise de poids. Une croquette adulte donnée trop tôt freine cette croissance ; une croquette chiot maintenue trop longtemps installe du surpoids.",
+          "La bascule se fait en général entre huit et douze mois pour un chien de taille moyenne, un peu plus tard pour les grandes races. Elle se fait progressivement, sur une semaine, en mélangeant les deux aliments pour éviter la diarrhée.",
+        ],
+      },
+      {
+        heading: "Lisez la liste des ingrédients dans l'ordre",
+        paragraphs: [
+          "Les ingrédients sont listés par ordre de poids décroissant. Si la première ligne est une céréale et non une source animale identifiée, l'aliment est surtout un aliment de remplissage. « Viandes et sous-produits animaux » sans précision d'espèce reste vague : préférez « poulet », « agneau » ou « poisson ».",
+          "Le taux de cendres brutes, souvent négligé, donne une bonne indication de la qualité des matières premières. Au-delà de 9 %, la part de matière minérale devient élevée.",
+        ],
+      },
+      {
+        heading: "Ajustez à l'activité réelle et au climat",
+        paragraphs: [
+          "Les rations indiquées sur le sac supposent un chien actif. À Abidjan, beaucoup de chiens sortent peu aux heures chaudes et dépensent moins que prévu : pesez la ration plutôt que de la doser à l'œil, et réévaluez-la tous les mois en passant la main sur les côtes, qui doivent se sentir sans appuyer.",
+          "Laissez toujours de l'eau fraîche à disposition et changez-la deux fois par jour en saison sèche. Un chien qui boit peu digère mal des croquettes sèches.",
+        ],
+      },
+    ],
+  },
+  {
+    id: "preparer-arrivee-chiot",
+    title: "Comment préparer l'arrivée d'un chiot ?",
+    excerpt:
+      "Ce qu'il faut avoir acheté avant, et ce qui se joue vraiment pendant les dix premiers jours.",
+    category: "Éducation",
+    publishedAt: "2026-07-30",
+    readingMinutes: 6,
+    sections: [
+      {
+        heading: "Le matériel à avoir avant, pas après",
+        paragraphs: [
+          "Un couchage à sa taille placé dans un coin calme, deux gamelles en inox, un collier réglable, une laisse d'un mètre vingt, un jouet à mâcher et le même aliment que celui de l'élevage : voilà le minimum. Acheter l'aliment sur place évite de cumuler stress du déménagement et changement de nourriture.",
+          "Prévoyez aussi un tapis lavable près de la porte de sortie pendant l'apprentissage de la propreté, et de quoi bloquer l'accès aux escaliers si vous en avez.",
+        ],
+      },
+      {
+        heading: "Les premiers jours : peu de monde, beaucoup de repos",
+        paragraphs: [
+          "Un chiot de deux à trois mois dort seize à dix-huit heures par jour. La tentation est d'inviter la famille pour le voir : c'est justement ce qu'il faut éviter la première semaine. Laissez-le explorer une pièce à la fois et retourner seul à son panier sans être suivi.",
+          "Sortez-le au réveil, après chaque repas et après chaque séance de jeu. Récompensez dès qu'il se soulage dehors, dans la seconde qui suit, sinon l'association ne se fait pas.",
+        ],
+      },
+      {
+        heading: "La nuit et la solitude",
+        paragraphs: [
+          "Les premières nuits sont bruyantes. Placer le panier dans votre chambre puis l'éloigner progressivement, pièce après pièce, fonctionne mieux que de tenir bon dès le premier soir.",
+          "Habituez-le à rester seul par tranches très courtes dès la deuxième semaine : cinq minutes, puis quinze, sans départ ni retour démonstratif. C'est ce qui évite l'anxiété de séparation à l'âge adulte.",
+        ],
+      },
+    ],
+  },
+  {
+    id: "choisir-harnais",
+    title: "Comment choisir un harnais ?",
+    excerpt:
+      "Trois mesures, un type de fermeture et un test simple pour savoir si le réglage est correct.",
+    category: "Accessoires",
+    publishedAt: "2026-07-11",
+    readingMinutes: 4,
+    sections: [
+      {
+        heading: "Mesurez avant de commander",
+        paragraphs: [
+          "Trois mesures suffisent : le tour de cou à la base, le tour de poitrine juste derrière les pattes avant, et la distance entre les deux. C'est le tour de poitrine qui détermine la taille, pas le poids du chien, deux chiens de vingt kilos pouvant avoir des poitrines très différentes.",
+          "Si votre chien est encore en croissance, prenez un modèle à quatre ou cinq points de réglage plutôt qu'une taille au-dessus.",
+        ],
+      },
+      {
+        heading: "Y, H ou norvégien",
+        paragraphs: [
+          "Le harnais en Y laisse l'épaule libre et convient à la majorité des chiens, y compris pour de longues marches. Le modèle en H est plus enveloppant et rassure les chiens qui reculent. Le harnais norvégien, avec sa sangle horizontale devant le poitrail, gêne le mouvement de l'épaule : il reste pratique pour de courtes sorties mais pas pour la randonnée.",
+          "Pour un chien qui tire, un anneau d'attache ventral change plus de choses que la forme du harnais : il redirige le chien vers vous au lieu de lui donner un appui.",
+        ],
+      },
+      {
+        heading: "Le test des deux doigts",
+        paragraphs: [
+          "Une fois le harnais réglé, vous devez pouvoir glisser deux doigts à plat sous chaque sangle, sans plus. Faites marcher le chien dix mètres puis vérifiez qu'aucune sangle ne frotte l'aisselle : c'est là que se forment les irritations.",
+          "En saison des pluies, rincez et séchez le harnais à l'ombre. Le nylon qui sèche au soleil durcit et devient abrasif.",
+        ],
+      },
+    ],
+  },
+  {
+    id: "soins-essentiels",
+    title: "Les soins essentiels du chien",
+    excerpt:
+      "Le calendrier minimal de vaccination, de vermifuge et de toilettage à tenir toute l'année.",
+    category: "Santé",
+    publishedAt: "2026-06-24",
+    readingMinutes: 5,
+    sections: [
+      {
+        heading: "Vaccins et rappels",
+        paragraphs: [
+          "La primovaccination se fait en deux à trois injections entre six et seize semaines, suivies d'un rappel un an plus tard puis d'un rappel régulier selon le protocole de votre vétérinaire. La rage est obligatoire pour tout déplacement hors du pays et fortement recommandée en zone urbaine.",
+          "Gardez le carnet de santé avec les vignettes collées et datées : c'est le seul document qui vaut preuve chez un pensionnaire, un toiletteur ou à la frontière.",
+        ],
+      },
+      {
+        heading: "Parasites internes et externes",
+        paragraphs: [
+          "Vermifugez tous les mois jusqu'à six mois, puis quatre fois par an pour un chien adulte, davantage s'il vit avec de jeunes enfants. Contre les puces et les tiques, un traitement continu est nécessaire toute l'année sous climat chaud et humide : il n'y a pas de saison creuse.",
+          "Inspectez les oreilles et les espaces entre les coussinets une fois par semaine. C'est là que se logent tiques et corps étrangers, et c'est un réflexe qui prend deux minutes.",
+        ],
+      },
+      {
+        heading: "Toilettage et dents",
+        paragraphs: [
+          "Un brossage hebdomadaire suffit pour un poil court, deux à trois pour un poil long ou une race à sous-poil dense. Le bain reste occasionnel, une fois par mois au maximum avec un shampoing pour chien : un lavage trop fréquent supprime le film protecteur de la peau.",
+          "Le tartre est le problème dentaire le plus fréquent. Un bâtonnet à mâcher quotidien ralentit sa formation, mais ne remplace pas un détartrage lorsque les gencives deviennent rouges.",
+        ],
+      },
+    ],
+  },
+  {
+    id: "besoins-chow-chow",
+    title: "Comprendre les besoins d'un Chow Chow",
+    excerpt:
+      "Une race indépendante, sensible à la chaleur et exigeante sur l'entretien du poil.",
+    category: "Races",
+    publishedAt: "2026-05-28",
+    readingMinutes: 6,
+    sections: [
+      {
+        heading: "Un caractère réservé, pas froid",
+        paragraphs: [
+          "Le Chow Chow s'attache profondément à sa famille mais reste distant avec les inconnus. Il ne réclame pas d'attention en permanence et supporte mal la contrainte physique : le forcer à accepter une caresse d'un visiteur est le meilleur moyen d'obtenir un grognement.",
+          "Son éducation demande de la régularité plutôt que de la fermeté. Les séances courtes et répétées donnent de bien meilleurs résultats que les longues sessions.",
+        ],
+      },
+      {
+        heading: "La chaleur est son vrai problème",
+        paragraphs: [
+          "Avec son double pelage et son museau court, le Chow Chow évacue mal la chaleur. Sous le climat ivoirien, les sorties se font tôt le matin et en fin de journée, jamais entre onze heures et quinze heures, et toujours avec de l'eau à disposition.",
+          "Un halètement bruyant qui ne se calme pas à l'ombre au bout de dix minutes doit être pris au sérieux : c'est le premier signe du coup de chaleur.",
+        ],
+      },
+      {
+        heading: "L'entretien du poil, chaque semaine",
+        paragraphs: [
+          "Deux brossages hebdomadaires sont un minimum, trois pendant les périodes de mue. Le sous-poil feutre vite s'il n'est pas travaillé jusqu'à la racine, et les nœuds formés à ce stade ne se démêlent plus : ils se coupent.",
+          "Ne tondez pas un Chow Chow pour le rafraîchir. Le pelage joue un rôle isolant dans les deux sens et repousse mal après une tonte rase.",
+        ],
+      },
+    ],
+  },
+];
+
+export function findArticle(articleId: string | undefined) {
+  return articles.find((article) => article.id === articleId);
+}

@@ -22,7 +22,7 @@ export default function ProductImage({
     return (
       <div
         className={cn(
-          "flex items-center justify-center bg-secondary text-muted-foreground",
+          "media-fallback flex items-center justify-center text-primary/50",
           className
         )}
         role="img"
@@ -39,7 +39,7 @@ export default function ProductImage({
       alt={product.name}
       loading="lazy"
       onError={() => setFailed(true)}
-      className={cn("bg-secondary object-cover", className)}
+      className={cn("media-fallback object-cover", className)}
     />
   );
 }

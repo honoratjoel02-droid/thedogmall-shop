@@ -2,6 +2,7 @@ import { useState, type FormEvent } from "react";
 import { CheckCircle, EnvelopeSimple, MapPin, Phone } from "@phosphor-icons/react";
 
 import SiteLayout from "../components/site/SiteLayout";
+import { contactDetails } from "../lib/navigation";
 import { Button } from "../components/ui/button";
 import { Card, CardContent } from "../components/ui/card";
 import { Input } from "../components/ui/input";
@@ -18,14 +19,14 @@ export default function Contact() {
 
   return (
     <SiteLayout>
-      <div className="mx-auto max-w-6xl px-6 py-12">
+      <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
         <h1 className="text-3xl font-bold tracking-tight text-foreground">
           Contactez-nous
         </h1>
 
         <p className="mt-1 max-w-xl text-muted-foreground">
-          Une question sur un produit ou une commande ? Écrivez-nous,
-          nous vous répondons rapidement.
+          Une question sur un chien, un produit ou une commande ?
+          Écrivez-nous, nous répondons sous une journée ouvrée.
         </p>
 
         <div className="mt-8 grid gap-8 md:grid-cols-3">
@@ -100,19 +101,25 @@ export default function Contact() {
                 Nos coordonnées
               </h2>
 
-              <div className="flex items-start gap-3 text-sm text-muted-foreground">
+              <a
+                href={`mailto:${contactDetails.email}`}
+                className="flex items-start gap-3 text-sm text-muted-foreground transition-colors hover:text-foreground"
+              >
                 <EnvelopeSimple size={18} className="mt-0.5 shrink-0 text-primary" />
-                contact@thedogmall.fr
-              </div>
+                {contactDetails.email}
+              </a>
 
-              <div className="flex items-start gap-3 text-sm text-muted-foreground">
+              <a
+                href={contactDetails.phoneHref}
+                className="flex items-start gap-3 text-sm text-muted-foreground transition-colors hover:text-foreground"
+              >
                 <Phone size={18} className="mt-0.5 shrink-0 text-primary" />
-                01 23 45 67 89
-              </div>
+                {contactDetails.phone}
+              </a>
 
               <div className="flex items-start gap-3 text-sm text-muted-foreground">
                 <MapPin size={18} className="mt-0.5 shrink-0 text-primary" />
-                12 rue des Chiots, 75000 Paris
+                {contactDetails.address}
               </div>
             </CardContent>
           </Card>

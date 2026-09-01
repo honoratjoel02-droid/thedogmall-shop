@@ -5,9 +5,11 @@ import { Minus, Plus } from "@phosphor-icons/react";
 import SiteLayout from "../components/site/SiteLayout";
 import ProductCard from "../components/site/ProductCard";
 import ProductImage from "../components/site/ProductImage";
+import FavoriteButton from "../components/site/FavoriteButton";
 import { Button } from "../components/ui/button";
 import { useCart } from "../hooks/useCart";
 import { mockProducts } from "../data/mockProducts";
+import { formatPrice } from "../lib/format";
 
 export default function ProductDetail() {
   const { productId } = useParams();
@@ -17,7 +19,7 @@ export default function ProductDetail() {
   const product = mockProducts.find((item) => item.id === productId);
 
   if (!product) {
-    return <Navigate to="/produits" replace />;
+    return <Navigate to="/boutique" replace />;
   }
 
   const relatedProducts = mockProducts
@@ -34,21 +36,39 @@ export default function ProductDetail() {
 
   return (
     <SiteLayout>
-      <div className="mx-auto max-w-6xl px-6 py-12">
-        <nav className="mb-6 text-sm text-muted-foreground">
-          <Link to="/produits" className="hover:text-foreground">
-            Produits
+      <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:py-12">
+        <nav
+          aria-label="Fil d'Ariane"
+          className="mb-6 text-sm text-muted-foreground"
+        >
+          <Link
+            to="/boutique"
+            className="transition-colors hover:text-foreground"
+          >
+            Boutique
           </Link>
-          <span className="mx-2">/</span>
+          <span className="mx-2" aria-hidden="true">
+            /
+          </span>
           <span className="text-foreground">{product.name}</span>
         </nav>
 
         <div className="grid gap-10 md:grid-cols-2">
-          <ProductImage
-            product={product}
-            className="aspect-square w-full rounded-2xl"
-            iconSize={96}
-          />
+          <div className="relative">
+            <ProductImage
+              product={product}
+              className="aspect-square w-full rounded-3xl"
+              iconSize={96}
+            />
+
+            <FavoriteButton
+              kind="product"
+              id={product.id}
+              label={product.name}
+              size={20}
+              className="absolute top-4 right-4 size-11"
+            />
+          </div>
 
           <div className="flex flex-col gap-4">
             <span className="text-xs font-medium tracking-wide text-primary uppercase">
@@ -60,7 +80,7 @@ export default function ProductDetail() {
             </h1>
 
             <p className="text-2xl font-bold text-foreground">
-              {product.price.toFixed(2)} €
+              {formatPrice(product.price)}
             </p>
 
             <p className="text-muted-foreground">

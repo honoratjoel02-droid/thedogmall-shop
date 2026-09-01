@@ -22,4 +22,6 @@ export type CartContextValue = {
 
 export const CartContext = createContext<CartContextValue | null>(null);
 
-export const CART_STORAGE_KEY = "thedogmall-cart";
+// Suffixe `-v2` : les paniers enregistrés avant le passage au franc CFA
+// contenaient des prix en euros, ils sont volontairement abandonnés.
+export const CART_STORAGE_KEY = "thedogmall-cart-v2";

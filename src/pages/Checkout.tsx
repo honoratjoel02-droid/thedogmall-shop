@@ -8,6 +8,7 @@ import { Card, CardContent } from "../components/ui/card";
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import { useCart } from "../hooks/useCart";
+import { formatPrice } from "../lib/format";
 
 export default function Checkout() {
   const { items, subtotal, clearCart } = useCart();
@@ -28,17 +29,17 @@ export default function Checkout() {
           <CheckCircle size={56} weight="duotone" className="text-primary" />
 
           <h1 className="text-2xl font-bold text-foreground">
-            Merci pour votre commande !
+            Merci pour votre commande
           </h1>
 
           <p className="max-w-md text-muted-foreground">
-            Votre commande de {orderTotal.toFixed(2)} € a bien été
-            enregistrée. Nous vous contactons très vite pour
-            confirmer les détails et le règlement.
+            Votre commande de {formatPrice(orderTotal)} est
+            enregistrée. Nous vous appelons dans la journée pour
+            confirmer l'adresse de livraison et le règlement.
           </p>
 
           <Link
-            to="/produits"
+            to="/boutique"
             className={buttonVariants({ className: "mt-2" })}
           >
             Continuer mes achats
@@ -76,7 +77,7 @@ export default function Checkout() {
                     <Input
                       id="fullName"
                       required
-                      placeholder="Jeanne Dupont"
+                      placeholder="Aya Koffi"
                     />
                   </div>
 
@@ -96,7 +97,7 @@ export default function Checkout() {
                       id="phone"
                       type="tel"
                       required
-                      placeholder="06 12 34 56 78"
+                      placeholder="07 58 42 19 03"
                     />
                   </div>
                 </div>
@@ -115,22 +116,22 @@ export default function Checkout() {
                     <Input
                       id="address"
                       required
-                      placeholder="12 rue des Chiots"
+                      placeholder="Rue des Jardins, immeuble Kouassi"
                     />
                   </div>
 
                   <div className="flex flex-col gap-2">
-                    <Label htmlFor="postalCode">Code postal</Label>
+                    <Label htmlFor="district">Quartier</Label>
                     <Input
-                      id="postalCode"
+                      id="district"
                       required
-                      placeholder="75000"
+                      placeholder="Riviera 2"
                     />
                   </div>
 
                   <div className="flex flex-col gap-2 sm:col-span-2">
-                    <Label htmlFor="city">Ville</Label>
-                    <Input id="city" required placeholder="Paris" />
+                    <Label htmlFor="city">Commune</Label>
+                    <Input id="city" required placeholder="Cocody" />
                   </div>
 
                   <div className="flex flex-col gap-2 sm:col-span-3">
@@ -148,8 +149,8 @@ export default function Checkout() {
 
             <p className="text-sm text-muted-foreground">
               Aucun paiement en ligne pour le moment : nous vous
-              contactons après votre commande pour organiser le
-              règlement.
+              appelons après votre commande pour confirmer la livraison
+              et le règlement, en espèces ou par mobile money.
             </p>
 
             <Button type="submit" size="lg" className="h-11">
@@ -174,7 +175,7 @@ export default function Checkout() {
                     </span>
 
                     <span className="font-medium text-foreground">
-                      {(item.product.price * item.quantity).toFixed(2)} €
+                      {formatPrice(item.product.price * item.quantity)}
                     </span>
                   </div>
                 ))}
@@ -182,7 +183,7 @@ export default function Checkout() {
 
               <div className="flex items-center justify-between border-t border-border pt-4 text-base font-bold text-foreground">
                 <span>Total</span>
-                <span>{subtotal.toFixed(2)} €</span>
+                <span>{formatPrice(subtotal)}</span>
               </div>
             </CardContent>
           </Card>
