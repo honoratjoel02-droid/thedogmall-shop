@@ -1,8 +1,5 @@
 import { contactDetails } from "./contact";
 import { formatAge, formatPrice } from "./format";
-import { articles } from "../data/articles";
-import { dogs } from "../data/dogs";
-import { mockProducts } from "../data/mockProducts";
 import { dogPhotos, productPhotos } from "./media";
 import type { Article } from "../data/articles";
 import type { Dog } from "../types/dog";
@@ -16,6 +13,11 @@ import type { Product } from "../types/product";
  * Ce module ne dépend d'aucune API de navigateur ni de React : il est
  * importé par l'application et par `vite.config.ts`, qui pré-génère les
  * balises de chaque page au moment du build.
+ *
+ * Il n'importe volontairement aucune donnée du catalogue : les fonctions
+ * reçoivent le chien, le produit ou l'article en paramètre. Sinon la
+ * moindre page réclamant son titre embarquerait tout le catalogue. La
+ * liste complète des pages vit dans `seo-pages.ts`, utilisé au build.
  */
 export const SITE_URL = "https://thedogmall.ci";
 
@@ -361,14 +363,4 @@ export function pageMeta(path: StaticPath): PageMeta {
   }
 
   return meta;
-}
-
-/** Toutes les pages du site, pour la pré-génération et le sitemap. */
-export function allPagesMeta(): PageMeta[] {
-  return [
-    ...staticPagesMeta,
-    ...dogs.map(dogMeta),
-    ...mockProducts.map(productMeta),
-    ...articles.map(articleMeta),
-  ];
 }

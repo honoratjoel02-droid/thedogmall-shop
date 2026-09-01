@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import { MagnifyingGlass, X } from "@phosphor-icons/react";
 
 import SiteLayout from "../components/site/SiteLayout";
@@ -8,6 +8,7 @@ import ProductCard from "../components/site/ProductCard";
 import { Button } from "../components/ui/button";
 import { mockProducts } from "../data/mockProducts";
 import type { ProductCategory } from "../types/product";
+import { normalizePath } from "../lib/utils";
 import { pageMeta } from "../lib/seo";
 
 /**
@@ -43,12 +44,13 @@ const copy: Record<
   },
 };
 
-type ProductsProps = {
-  universe?: ShopUniverse;
-};
-
-export default function Products({ universe = "boutique" }: ProductsProps) {
+export default function Products() {
+  const { pathname } = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
+
+  // Deux routes partagent cette page ; l'URL dit laquelle.
+  const universe: ShopUniverse =
+    normalizePath(pathname) === "/accessoires" ? "accessoires" : "boutique";
   const activeCategory = searchParams.get("categorie");
   const searchTerm = searchParams.get("recherche") ?? "";
 

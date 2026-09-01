@@ -1,4 +1,7 @@
+import { useLocation } from "react-router-dom";
+
 import SiteLayout from "../components/site/SiteLayout";
+import { normalizePath } from "../lib/utils";
 import { pageMeta } from "../lib/seo";
 import type { StaticPath } from "../lib/seo";
 
@@ -8,6 +11,13 @@ const legalPaths: Record<LegalPageKey, StaticPath> = {
   mentions: "/mentions-legales",
   confidentialite: "/confidentialite",
   cgv: "/cgv",
+};
+
+/** Les trois pages légales partagent ce composant ; l'URL dit laquelle. */
+const keysByPath: Record<string, LegalPageKey> = {
+  "/mentions-legales": "mentions",
+  "/confidentialite": "confidentialite",
+  "/cgv": "cgv",
 };
 
 const pages: Record<
@@ -73,11 +83,9 @@ const pages: Record<
   },
 };
 
-type LegalProps = {
-  page: LegalPageKey;
-};
-
-export default function Legal({ page }: LegalProps) {
+export default function Legal() {
+  const { pathname } = useLocation();
+  const page = keysByPath[normalizePath(pathname)] ?? "mentions";
   const content = pages[page];
 
   return (

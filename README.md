@@ -87,6 +87,22 @@ canoniques et le sitemap pointeront au mauvais endroit.
 En navigation interne, le composant `Seo` met à jour titre, description,
 URL canonique et données structurées.
 
+## Chargement
+
+L'accueil part avec le premier chargement ; les autres pages sont
+téléchargées à la demande (`lazy` de React Router, dans
+`src/router/index.tsx`). Ajouter des pages, des chiens ou des articles ne
+grossit donc plus l'arrivée sur le site.
+
+Le gain immédiat reste modeste : environ 455 Ko de JavaScript sur
+l'accueil au lieu de 524 Ko, soit 145 Ko compressés au lieu de 154 Ko.
+L'essentiel du poids est React et React Router, nécessaires dès la
+première image.
+
+Pendant qu'une page se télécharge, React Router garde la page précédente
+affichée ; à l'ouverture directe d'une URL, `PageLoading` montre l'en-tête,
+le pied de page et un squelette de contenu.
+
 ## Prix et devise
 
 Tous les prix sont stockés en francs CFA sous forme d'entiers et affichés
@@ -110,6 +126,8 @@ enregistrés avant le passage au franc CFA sont ignorés (la clé
   sont conservés dans le `localStorage` de l'appareil.
 - Les coordonnées (téléphone, WhatsApp, email, adresse) sont centralisées
   dans `src/lib/contact.ts` : c'est le seul endroit à modifier.
-- Le JavaScript est livré en un seul fichier d'environ 520 Ko (150 Ko
-  compressés). Un découpage par route (`React.lazy`) allégerait le premier
-  chargement sur mobile ; ce n'est pas fait pour l'instant.
+- Le contenu des pages est rendu par le navigateur : le HTML pré-généré ne
+  contient que les balises `head` et une page vide. Rendre aussi le corps
+  au build (rendu côté serveur statique) ferait apparaître le texte sans
+  attendre le JavaScript ; ce n'est pas fait, cela demanderait de revoir la
+  restauration du panier et des favoris depuis le `localStorage`.

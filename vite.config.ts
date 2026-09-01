@@ -6,7 +6,8 @@ import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig, type Plugin } from "vite";
 
-import { SITE_NAME, SITE_URL, allPagesMeta, type PageMeta } from "./src/lib/seo";
+import { SITE_NAME, SITE_URL, type PageMeta } from "./src/lib/seo";
+import { allPagesMeta } from "./src/lib/seo-pages";
 
 /** Bloc de `index.html` remplacé page par page. */
 const SEO_BLOCK = /<!-- seo:start -->[\s\S]*?<!-- seo:end -->/;
