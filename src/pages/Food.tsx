@@ -6,7 +6,7 @@ import SiteLayout from "../components/site/SiteLayout";
 import ProductCard from "../components/site/ProductCard";
 import Reveal from "../components/site/Reveal";
 import { Button } from "../components/ui/button";
-import { mockProducts } from "../data/mockProducts";
+import { products } from "../data/products";
 import type { FoodStage } from "../types/product";
 import { pageMeta } from "../lib/seo";
 
@@ -25,7 +25,7 @@ const stageNotes: Record<FoodStage, string> = {
     "Digestion sensible, allergies, stérilisation.",
 };
 
-const foodProducts = mockProducts.filter(
+const foodProducts = products.filter(
   (product) => product.category === "Alimentation"
 );
 
@@ -33,7 +33,7 @@ export default function Food() {
   const [searchParams, setSearchParams] = useSearchParams();
   const activeStage = searchParams.get("etape");
 
-  const products = useMemo(
+  const visibleProducts = useMemo(
     () =>
       activeStage
         ? foodProducts.filter(
@@ -106,13 +106,13 @@ export default function Food() {
 
         <Reveal>
           <div className="mt-8 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {products.map((product) => (
+            {visibleProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
         </Reveal>
 
-        {products.length === 0 && (
+        {visibleProducts.length === 0 && (
           <div className="mt-8 rounded-3xl border border-dashed border-border py-20 text-center">
             <p className="font-medium text-foreground">
               Ce rayon est en cours de réassort.

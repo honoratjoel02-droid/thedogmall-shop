@@ -10,7 +10,7 @@ import FavoriteButton from "../components/site/FavoriteButton";
 import WhatsAppButton from "../components/site/WhatsAppButton";
 import { Button } from "../components/ui/button";
 import { useCart } from "../hooks/useCart";
-import { mockProducts } from "../data/mockProducts";
+import { products } from "../data/products";
 import { formatPrice } from "../lib/format";
 import { productMessage } from "../lib/whatsapp";
 import { productPhotos } from "../lib/media";
@@ -22,13 +22,13 @@ export default function ProductDetail() {
   const { addItem, openDrawer } = useCart();
   const [quantity, setQuantity] = useState(1);
 
-  const product = mockProducts.find((item) => item.id === productId);
+  const product = products.find((item) => item.id === productId);
 
   if (!product) {
     return <Navigate to="/boutique" replace />;
   }
 
-  const relatedProducts = mockProducts
+  const relatedProducts = products
     .filter(
       (item) =>
         item.category === product.category && item.id !== product.id

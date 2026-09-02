@@ -22,7 +22,7 @@ import Reveal from "../components/site/Reveal";
 import Newsletter from "../components/site/Newsletter";
 import { buttonVariants } from "../components/ui/button";
 import { dogs } from "../data/dogs";
-import { essentialProductIds, mockProducts } from "../data/mockProducts";
+import { featuredProducts } from "../data/products";
 import { articles } from "../data/articles";
 import { formatArticleDate } from "../lib/format";
 import { homeMeta } from "../lib/seo";
@@ -96,9 +96,7 @@ const commitments: { icon: Icon; title: string; description: string }[] = [
 
 const homeDogs = dogs.slice(0, 4);
 
-const essentials = essentialProductIds
-  .map((id) => mockProducts.find((product) => product.id === id))
-  .filter((product) => product !== undefined);
+const essentials = featuredProducts.slice(0, 4);
 
 const homeArticles = articles.slice(0, 5);
 

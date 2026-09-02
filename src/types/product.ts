@@ -23,6 +23,8 @@ export type Product = {
   price: number;
   description: string;
   foodStage?: FoodStage;
+  /** Mis en avant dans « Les indispensables », sur la page d'accueil. */
+  featured?: boolean;
   /**
    * Noms des fichiers photo dans `public/products/`, dans l'ordre
    * d'affichage. Omis, on cherche `<id>.jpg`.

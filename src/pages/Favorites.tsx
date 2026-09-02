@@ -8,7 +8,7 @@ import ProductCard from "../components/site/ProductCard";
 import { buttonVariants } from "../components/ui/button";
 import { useFavorites } from "../hooks/useFavorites";
 import { dogs } from "../data/dogs";
-import { mockProducts } from "../data/mockProducts";
+import { products } from "../data/products";
 import { pageMeta } from "../lib/seo";
 
 export default function Favorites() {
@@ -18,7 +18,7 @@ export default function Favorites() {
     favorites.dogs.includes(dog.id)
   );
 
-  const favoriteProducts = mockProducts.filter((product) =>
+  const favoriteProducts = products.filter((product) =>
     favorites.products.includes(product.id)
   );
 

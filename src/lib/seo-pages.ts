@@ -7,7 +7,7 @@ import {
 } from "./seo";
 import { articles } from "../data/articles";
 import { dogs } from "../data/dogs";
-import { mockProducts } from "../data/mockProducts";
+import { products } from "../data/products";
 
 /**
  * Toutes les pages du site, pour la pré-génération et le sitemap.
@@ -19,7 +19,7 @@ export function allPagesMeta(): PageMeta[] {
   return [
     ...staticPagesMeta,
     ...dogs.map(dogMeta),
-    ...mockProducts.map(productMeta),
+    ...products.map(productMeta),
     ...articles.map(articleMeta),
   ];
 }

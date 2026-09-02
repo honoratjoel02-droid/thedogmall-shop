@@ -1,7 +1,7 @@
 # Photos des chiens
 
 Déposez ici une photo par chien, nommée avec l'identifiant utilisé dans
-`src/data/dogs.ts` : `roy.jpg`, `luna.jpg`, `kenzo.jpg`, `nala.jpg`.
+`content/dogs.json` : `roy.jpg`, `luna.jpg`, `kenzo.jpg`, `nala.jpg`.
 
 - Format : JPEG, cadrage portrait 4/5 (par exemple 1000 × 1250 px).
 - Poids conseillé : moins de 200 Ko par photo.
@@ -9,13 +9,12 @@ Déposez ici une photo par chien, nommée avec l'identifiant utilisé dans
 ## Plusieurs photos pour un même chien
 
 Déposez les fichiers, puis listez-les dans l'ordre d'affichage sur le
-chien concerné, dans `src/data/dogs.ts` :
+chien concerné, dans `content/dogs.json` :
 
-```ts
+```json
 {
-  id: "roy",
-  images: ["roy.jpg", "roy-profil.jpg", "roy-jardin.jpg"],
-  // ...
+  "id": "roy",
+  "images": ["roy.jpg", "roy-profil.jpg", "roy-jardin.jpg"]
 }
 ```
 

@@ -1,7 +1,7 @@
 import { contactDetails } from "./contact";
 import { formatAge, formatPrice } from "./format";
 import { dogPhotos, productPhotos } from "./media";
-import type { Article } from "../data/articles";
+import type { Article } from "../types/article";
 import type { Dog } from "../types/dog";
 import type { Product } from "../types/product";
 

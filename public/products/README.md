@@ -1,7 +1,7 @@
 # Photos des produits
 
 Une photo par produit, nommée avec l'identifiant utilisé dans
-`src/data/mockProducts.ts` : `collier-premium.jpg`, `lit-premium.jpg`…
+`content/products.json` : `collier-premium.jpg`, `lit-premium.jpg`…
 
 - Format : JPEG, cadrage carré (par exemple 1000 × 1000 px).
 - Poids conseillé : moins de 200 Ko par photo.
@@ -11,15 +11,14 @@ Une photo par produit, nommée avec l'identifiant utilisé dans
 Déposez les fichiers, puis listez-les dans l'ordre d'affichage sur le
 produit concerné :
 
-```ts
+```json
 {
-  id: "harnais-confort",
-  images: [
+  "id": "harnais-confort",
+  "images": [
     "harnais-confort.jpg",
     "harnais-confort-dos.jpg",
-    "harnais-confort-porte.jpg",
-  ],
-  // ...
+    "harnais-confort-porte.jpg"
+  ]
 }
 ```
 

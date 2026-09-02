@@ -63,7 +63,7 @@ qui sont alors servis, exactement comme en ligne.
 Les images sont servies depuis `public/`, sans build particulier :
 
 - `public/products/<id-produit>.jpg` — photos produits (identifiants de
-  `src/data/mockProducts.ts`), voir `public/products/README.md`.
+  `content/products.json`), voir `public/products/README.md`.
 - `public/dogs/<id-chien>.jpg` — photos des chiens, cadrage portrait 4/5,
   voir `public/dogs/README.md`.
 - `public/hero-chien.jpg` — grande photo du hero de la page d'accueil,
@@ -156,6 +156,27 @@ Pendant qu'une page se télécharge, React Router garde la page précédente
 affichée ; à l'ouverture directe d'une URL, `PageLoading` montre l'en-tête,
 le pied de page et un squelette de contenu.
 
+## Catalogue
+
+Les chiens, les produits et les articles vivent dans `content/`, en trois
+fichiers texte modifiables sans écrire de code, y compris depuis
+l'interface web de GitHub. Le mode d'emploi est dans
+[`content/README.md`](content/README.md).
+
+Chaque fichier est contrôlé au moment du build : identifiants uniques et
+bien formés, prix entiers, valeurs autorisées pour le sexe, la
+disponibilité, la catégorie et l'étape de vie. Une entrée mal formée
+arrête la mise en ligne avec un message situé —
+
+```
+content/dogs.json → entrée 2 (« luna ») : le champ « price » doit être un
+nombre entier positif, sans espace ni « FCFA ».
+```
+
+— plutôt que de casser une page en production. Le contrôle vit dans
+`src/data/validate.ts` ; les trois modules de `src/data/` ne font que
+l'appliquer.
+
 ## Prix et devise
 
 Tous les prix sont stockés en francs CFA sous forme d'entiers et affichés
@@ -165,9 +186,8 @@ enregistrés avant le passage au franc CFA sont ignorés (la clé
 
 ## État actuel
 
-- Les chiens (`src/data/dogs.ts`), les produits
-  (`src/data/mockProducts.ts`) et les articles (`src/data/articles.ts`)
-  sont des données de démonstration, à remplacer par le vrai catalogue.
+- Le contenu de `content/` est une démonstration, à remplacer par le vrai
+  catalogue.
 - Aucun paiement en ligne n'est intégré : le parcours prévoit un appel de
   confirmation puis un règlement à la livraison.
 - La création de compte n'existe pas encore. `/compte` regroupe les

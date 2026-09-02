@@ -6,7 +6,7 @@ import SiteLayout from "../components/site/SiteLayout";
 import PageHeader from "../components/site/PageHeader";
 import ProductCard from "../components/site/ProductCard";
 import { Button } from "../components/ui/button";
-import { mockProducts } from "../data/mockProducts";
+import { products } from "../data/products";
 import type { ProductCategory } from "../types/product";
 import { normalizePath } from "../lib/utils";
 import { pageMeta } from "../lib/seo";
@@ -62,10 +62,10 @@ export default function Products() {
     [universe]
   );
 
-  const products = useMemo(() => {
+  const visibleProducts = useMemo(() => {
     const term = searchTerm.trim().toLowerCase();
 
-    return mockProducts.filter((product) => {
+    return products.filter((product) => {
       const inUniverse =
         universe === "boutique" || product.category !== "Alimentation";
 
@@ -163,14 +163,15 @@ export default function Products() {
 
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:py-16">
         <p className="text-sm text-muted-foreground" aria-live="polite">
-          {products.length} produit{products.length > 1 ? "s" : ""}
+          {visibleProducts.length} produit
+          {visibleProducts.length > 1 ? "s" : ""}
           {activeCategory ? ` dans « ${activeCategory} »` : ""}
           {searchTerm ? ` pour « ${searchTerm} »` : ""}
         </p>
 
-        {products.length > 0 ? (
+        {visibleProducts.length > 0 ? (
           <div className="mt-8 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {products.map((product) => (
+            {visibleProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
