@@ -112,6 +112,34 @@ canoniques et le sitemap pointeront au mauvais endroit.
 En navigation interne, le composant `Seo` met à jour titre, description,
 URL canonique et données structurées.
 
+## Formulaires
+
+Le site est hébergé en statique : il n'a pas de serveur capable de
+recevoir un message. Une variable d'environnement désigne le service qui
+s'en charge et vous transmet chaque envoi par email :
+
+```bash
+cp .env.example .env.local   # puis collez votre URL dans VITE_FORM_ENDPOINT
+```
+
+Formspree et Web3Forms sont gratuits et fonctionnent sans code : vous
+créez un formulaire, vous copiez l'URL fournie. Pensez à ajouter la même
+variable chez votre hébergeur (Vercel : Settings → Environment
+Variables), sinon le site en ligne ne l'aura pas.
+
+**Tant que la variable est vide**, rien ne casse et rien ne ment :
+
+- le formulaire de contact et celui de commande ouvrent WhatsApp avec le
+  message déjà rédigé, coordonnées et panier compris ;
+- la commande n'est pas marquée comme passée et le panier reste rempli
+  tant que le client n'a pas envoyé le message ;
+- la newsletter n'est pas affichée du tout, faute d'endroit où enregistrer
+  l'inscription.
+
+Les trois formulaires valident leurs champs, affichent les erreurs sous
+le champ concerné, gardent la saisie en cas d'échec et signalent
+clairement ce qui s'est passé.
+
 ## Chargement
 
 L'accueil part avec le premier chargement ; les autres pages sont
@@ -140,10 +168,6 @@ enregistrés avant le passage au franc CFA sont ignorés (la clé
 - Les chiens (`src/data/dogs.ts`), les produits
   (`src/data/mockProducts.ts`) et les articles (`src/data/articles.ts`)
   sont des données de démonstration, à remplacer par le vrai catalogue.
-- Les formulaires de commande et de contact ne sont connectés à aucun
-  backend : ils affichent une confirmation côté client uniquement. Il
-  faudra brancher une API pour recevoir réellement les commandes et les
-  messages.
 - Aucun paiement en ligne n'est intégré : le parcours prévoit un appel de
   confirmation puis un règlement à la livraison.
 - La création de compte n'existe pas encore. `/compte` regroupe les

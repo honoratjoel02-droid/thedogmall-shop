@@ -40,3 +40,55 @@ export function cartMessage(items: CartItem[], subtotal: number) {
 
 export const generalMessage =
   "Bonjour THE DOG MALL, j'ai une question sur vos chiens et vos produits.";
+
+export function contactMessage(fields: {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}) {
+  return [
+    `Bonjour THE DOG MALL, message de ${fields.name} (${fields.email}).`,
+    "",
+    `Sujet : ${fields.subject}`,
+    "",
+    fields.message,
+  ].join("\n");
+}
+
+export function orderMessage(
+  customer: {
+    fullName: string;
+    phone: string;
+    email: string;
+    address: string;
+    district: string;
+    city: string;
+    notes: string;
+  },
+  items: CartItem[],
+  subtotal: number
+) {
+  const lines = items.map(
+    (item) =>
+      `• ${item.product.name} × ${item.quantity} — ${formatPrice(item.product.price * item.quantity)}`
+  );
+
+  const address = [customer.address, customer.district, customer.city]
+    .filter(Boolean)
+    .join(", ");
+
+  return [
+    "Bonjour THE DOG MALL, je confirme la commande suivante :",
+    "",
+    ...lines,
+    "",
+    `Total : ${formatPrice(subtotal)}`,
+    "",
+    `Nom : ${customer.fullName}`,
+    `Téléphone : ${customer.phone}`,
+    `Email : ${customer.email}`,
+    `Livraison : ${address}`,
+    ...(customer.notes ? [`Précisions : ${customer.notes}`] : []),
+  ].join("\n");
+}
