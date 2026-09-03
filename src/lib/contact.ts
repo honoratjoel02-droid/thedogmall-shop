@@ -5,8 +5,8 @@
  * `vite.config.ts` pour générer les métadonnées des pages au build.
  */
 export const contactDetails = {
-  phone: "+225 07 58 42 19 03",
-  phoneHref: "tel:+2250758421903",
+  phone: "+225 07 67 09 47 76",
+  phoneHref: "tel:+2250767094776",
   email: "contact@thedogmall.ci",
   address: "Abidjan, Côte d'Ivoire",
   city: "Abidjan",
@@ -14,8 +14,7 @@ export const contactDetails = {
   /**
    * Numéro WhatsApp au format international, chiffres uniquement (indicatif
    * pays compris, sans « + » ni espaces) : c'est ce qu'attend wa.me.
-   * À remplacer par le vrai numéro de la boutique avant la mise en ligne.
    */
-  whatsapp: "2250758421903",
+  whatsapp: "2250767094776",
   openingHours: "Du lundi au samedi, de 8 h à 19 h",
 };

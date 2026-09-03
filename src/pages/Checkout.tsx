@@ -263,7 +263,7 @@ export default function Checkout() {
                       onChange={(event) =>
                         update("phone", event.target.value)
                       }
-                      placeholder="07 58 42 19 03"
+                      placeholder="07 XX XX XX XX"
                       autoComplete="tel"
                       {...fieldAria("phone", errors.phone)}
                     />

@@ -9,17 +9,18 @@ bloquantes, les dernières peuvent attendre.
 
 Un seul fichier : **`src/lib/contact.ts`**.
 
+Le téléphone et le WhatsApp sont **faits** : `+225 07 67 09 47 76`. Si ce
+numéro change un jour, les trois champs `phone`, `phoneHref` et
+`whatsapp` doivent être modifiés ensemble — le dernier s'écrit en
+chiffres seuls, indicatif compris, sans `+` ni espaces.
+
+Restent à corriger :
+
 | Champ | Aujourd'hui | À mettre |
 | --- | --- | --- |
-| `phone` | `+225 07 58 42 19 03` | votre numéro, tel qu'il doit s'afficher |
-| `phoneHref` | `tel:+2250758421903` | le même, sans espaces, pour le clic |
-| `whatsapp` | `2250758421903` | le même, **chiffres seuls**, indicatif compris, sans `+` |
 | `email` | `contact@thedogmall.ci` | votre adresse |
 | `address`, `city` | `Abidjan, Côte d'Ivoire` | votre adresse exacte |
 | `openingHours` | `Du lundi au samedi, de 8 h à 19 h` | vos vraies heures |
-
-Le numéro WhatsApp est le plus important : c'est lui qui reçoit les
-commandes. Un numéro faux, et une commande part dans le vide.
 
 ## 2. Le nom de domaine — bloquant
 
