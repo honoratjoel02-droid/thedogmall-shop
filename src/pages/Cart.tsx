@@ -2,17 +2,30 @@ import { Link } from "react-router-dom";
 import { Minus, Plus, ShoppingBag, Trash } from "@phosphor-icons/react";
 
 import SiteLayout from "../components/site/SiteLayout";
+import PageLoading from "../components/site/PageLoading";
 import ProductImage from "../components/site/ProductImage";
+import WhatsAppButton from "../components/site/WhatsAppButton";
 import { buttonVariants } from "../components/ui/button";
 import { Card, CardContent } from "../components/ui/card";
 import { useCart } from "../hooks/useCart";
+import { formatPrice } from "../lib/format";
+import { cartMessage } from "../lib/whatsapp";
+import { pageMeta } from "../lib/seo";
 
 export default function Cart() {
-  const { items, updateQuantity, removeItem, subtotal } = useCart();
+  const { items, updateQuantity, removeItem, subtotal, isRestored } =
+    useCart();
+
+  // Le panier enregistré est relu après le premier rendu : annoncer un
+  // panier vide avant cela ferait clignoter la page de tout client qui en
+  // a un.
+  if (!isRestored) {
+    return <PageLoading meta={pageMeta("/panier")} />;
+  }
 
   if (items.length === 0) {
     return (
-      <SiteLayout>
+      <SiteLayout meta={pageMeta("/panier")}>
         <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 px-6 py-24 text-center">
           <ShoppingBag size={56} weight="duotone" className="text-muted-foreground" />
 
@@ -25,7 +38,7 @@ export default function Cart() {
           </p>
 
           <Link
-            to="/produits"
+            to="/boutique"
             className={buttonVariants({ className: "mt-2" })}
           >
             Voir les produits
@@ -36,7 +49,7 @@ export default function Cart() {
   }
 
   return (
-    <SiteLayout>
+    <SiteLayout meta={pageMeta("/panier")}>
       <div className="mx-auto max-w-6xl px-6 py-12">
         <h1 className="mb-8 text-3xl font-bold tracking-tight text-foreground">
           Votre panier
@@ -48,7 +61,7 @@ export default function Cart() {
               <Card key={item.product.id} className="shadow-sm">
                 <CardContent className="flex items-center gap-4">
                   <Link
-                    to={`/produits/${item.product.id}`}
+                    to={`/boutique/${item.product.id}`}
                     className="block size-20 shrink-0 overflow-hidden rounded-2xl"
                   >
                     <ProductImage
@@ -60,14 +73,14 @@ export default function Cart() {
 
                   <div className="flex-1">
                     <Link
-                      to={`/produits/${item.product.id}`}
+                      to={`/boutique/${item.product.id}`}
                       className="font-semibold text-foreground hover:text-primary"
                     >
                       {item.product.name}
                     </Link>
 
                     <p className="text-sm text-muted-foreground">
-                      {item.product.price.toFixed(2)} € / unité
+                      {formatPrice(item.product.price)} / unité
                     </p>
                   </div>
 
@@ -106,7 +119,7 @@ export default function Cart() {
                   </div>
 
                   <span className="w-20 text-right font-semibold text-foreground">
-                    {(item.product.price * item.quantity).toFixed(2)} €
+                    {formatPrice(item.product.price * item.quantity)}
                   </span>
 
                   <button
@@ -130,7 +143,7 @@ export default function Cart() {
 
               <div className="flex items-center justify-between text-sm text-muted-foreground">
                 <span>Sous-total</span>
-                <span>{subtotal.toFixed(2)} €</span>
+                <span>{formatPrice(subtotal)}</span>
               </div>
 
               <div className="flex items-center justify-between text-sm text-muted-foreground">
@@ -140,7 +153,7 @@ export default function Cart() {
 
               <div className="flex items-center justify-between border-t border-border pt-4 text-base font-bold text-foreground">
                 <span>Total</span>
-                <span>{subtotal.toFixed(2)} €</span>
+                <span>{formatPrice(subtotal)}</span>
               </div>
 
               <Link
@@ -152,6 +165,12 @@ export default function Cart() {
               >
                 Passer la commande
               </Link>
+
+              <WhatsAppButton
+                size="lg"
+                className="h-10 w-full"
+                message={cartMessage(items, subtotal)}
+              />
             </CardContent>
           </Card>
         </div>

@@ -13,16 +13,35 @@ function readStoredCart(): CartItem[] {
 }
 
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [items, setItems] = useState<CartItem[]>(readStoredCart);
+  const [items, setItems] = useState<CartItem[]>([]);
+  const [restored, setRestored] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
+  /*
+   * Le panier est relu après le premier rendu, pas pendant. Les pages
+   * sont générées au build, où `localStorage` n'existe pas : partir de la
+   * même liste vide des deux côtés évite que React reconstruise la page
+   * au lieu de la reprendre.
+   */
   useEffect(() => {
+    // Lire pendant le rendu casserait la reprise du HTML généré au
+    // build, qui ne connaît pas le localStorage.
+    // oxlint-disable-next-line react/set-state-in-effect
+    setItems(readStoredCart());
+    setRestored(true);
+  }, []);
+
+  useEffect(() => {
+    // Tant que le panier enregistré n'a pas été lu, l'écrire l'effacerait.
+    if (!restored) return;
+
     try {
       localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
     } catch {
-      // localStorage unavailable (private mode, quota), cart just won't persist
+      // localStorage indisponible (navigation privée, quota) : le panier
+      // vaut alors le temps de la visite.
     }
-  }, [items]);
+  }, [items, restored]);
 
   function addItem(product: CartItem["product"], quantity = 1) {
     setItems((prev) => {
@@ -93,6 +112,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         clearCart,
         itemCount,
         subtotal,
+        isRestored: restored,
         isDrawerOpen,
         openDrawer,
         closeDrawer,

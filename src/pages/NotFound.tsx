@@ -20,10 +20,10 @@ export default function NotFound() {
         </Link>
 
         <Link
-          to="/produits"
+          to="/boutique"
           className={buttonVariants({ variant: "outline" })}
         >
-          Voir le catalogue
+          Voir la boutique
         </Link>
       </div>
     </div>

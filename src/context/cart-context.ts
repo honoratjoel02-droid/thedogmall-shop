@@ -15,6 +15,12 @@ export type CartContextValue = {
   clearCart: () => void;
   itemCount: number;
   subtotal: number;
+  /**
+   * Faux jusqu'à la relecture du panier enregistré, juste après le premier
+   * rendu. Les pages qui décident quelque chose à partir du panier (le
+   * vider, rediriger) doivent attendre ce signal.
+   */
+  isRestored: boolean;
   isDrawerOpen: boolean;
   openDrawer: () => void;
   closeDrawer: () => void;
@@ -22,4 +28,6 @@ export type CartContextValue = {
 
 export const CartContext = createContext<CartContextValue | null>(null);
 
-export const CART_STORAGE_KEY = "thedogmall-cart";
+// Suffixe `-v2` : les paniers enregistrés avant le passage au franc CFA
+// contenaient des prix en euros, ils sont volontairement abandonnés.
+export const CART_STORAGE_KEY = "thedogmall-cart-v2";

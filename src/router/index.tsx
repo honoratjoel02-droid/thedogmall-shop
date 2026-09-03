@@ -1,58 +1,33 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, matchRoutes } from "react-router-dom";
+import type { RouteObject } from "react-router-dom";
 
-import Home from "../pages/Home";
-import Products from "../pages/Products";
-import ProductDetail from "../pages/ProductDetail";
-import Cart from "../pages/Cart";
-import Checkout from "../pages/Checkout";
-import Contact from "../pages/Contact";
-import About from "../pages/About";
-import Legal from "../pages/Legal";
-import NotFound from "../pages/NotFound";
+import { createLazyRoutes } from "./routes";
 
-export const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Home />,
-  },
-  {
-    path: "/produits",
-    element: <Products />,
-  },
-  {
-    path: "/produits/:productId",
-    element: <ProductDetail />,
-  },
-  {
-    path: "/panier",
-    element: <Cart />,
-  },
-  {
-    path: "/commande",
-    element: <Checkout />,
-  },
-  {
-    path: "/a-propos",
-    element: <About />,
-  },
-  {
-    path: "/contact",
-    element: <Contact />,
-  },
-  {
-    path: "/mentions-legales",
-    element: <Legal page="mentions" />,
-  },
-  {
-    path: "/confidentialite",
-    element: <Legal page="confidentialite" />,
-  },
-  {
-    path: "/cgv",
-    element: <Legal page="cgv" />,
-  },
-  {
-    path: "*",
-    element: <NotFound />,
-  },
-]);
+/**
+ * Prépare le routeur du navigateur.
+ *
+ * La page d'entrée est chargée **avant** de rendre la main : son HTML est
+ * déjà à l'écran, généré au build, et React doit pouvoir le reprendre tel
+ * quel. Sans cela il afficherait l'écran d'attente à la place, le temps du
+ * téléchargement, et l'on verrait la page clignoter au chargement.
+ */
+export async function createRouter(pathname: string) {
+  const routes = createLazyRoutes();
+
+  await Promise.all(
+    (matchRoutes(routes, pathname) ?? []).map((match) =>
+      resolveRoute(match.route)
+    )
+  );
+
+  return createBrowserRouter(routes);
+}
+
+async function resolveRoute(route: RouteObject) {
+  if (typeof route.lazy !== "function") return;
+
+  const resolved = await route.lazy();
+
+  Object.assign(route, resolved);
+  delete route.lazy;
+}
