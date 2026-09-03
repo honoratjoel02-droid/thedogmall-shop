@@ -13,6 +13,8 @@ export type FavoritesContextValue = {
   isFavorite: (kind: FavoriteKind, id: string) => boolean;
   toggleFavorite: (kind: FavoriteKind, id: string) => void;
   favoriteCount: number;
+  /** Faux jusqu'à la relecture des favoris enregistrés. */
+  isRestored: boolean;
 };
 
 export const FavoritesContext =

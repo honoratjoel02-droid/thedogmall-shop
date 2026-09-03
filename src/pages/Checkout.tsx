@@ -7,6 +7,7 @@ import {
   WhatsappLogo,
 } from "@phosphor-icons/react";
 
+import PageLoading from "../components/site/PageLoading";
 import SiteLayout from "../components/site/SiteLayout";
 import { Button, buttonVariants } from "../components/ui/button";
 import { Card, CardContent } from "../components/ui/card";
@@ -46,7 +47,7 @@ const emptyValues: Record<Fields, string> = {
 };
 
 export default function Checkout() {
-  const { items, subtotal, clearCart } = useCart();
+  const { items, subtotal, clearCart, isRestored } = useCart();
   const [values, setValues] = useState(emptyValues);
   const [errors, setErrors] = useState<FieldErrors<Fields>>({});
   const [status, setStatus] = useState<
@@ -185,6 +186,12 @@ export default function Checkout() {
         </div>
       </SiteLayout>
     );
+  }
+
+  // Sans cette attente, un client qui ouvre directement cette adresse
+  // serait renvoyé au panier avant même que son panier soit relu.
+  if (!isRestored) {
+    return <PageLoading meta={pageMeta("/commande")} />;
   }
 
   if (items.length === 0) {

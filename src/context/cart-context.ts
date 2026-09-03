@@ -15,6 +15,12 @@ export type CartContextValue = {
   clearCart: () => void;
   itemCount: number;
   subtotal: number;
+  /**
+   * Faux jusqu'à la relecture du panier enregistré, juste après le premier
+   * rendu. Les pages qui décident quelque chose à partir du panier (le
+   * vider, rediriger) doivent attendre ce signal.
+   */
+  isRestored: boolean;
   isDrawerOpen: boolean;
   openDrawer: () => void;
   closeDrawer: () => void;

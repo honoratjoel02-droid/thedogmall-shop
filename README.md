@@ -91,16 +91,16 @@ Le site est une application monopage : sans traitement particulier, toutes
 les URL partageraient le titre et l'aperçu de l'accueil pour les robots
 qui n'exécutent pas de JavaScript, dont les aperçus de lien WhatsApp.
 
-Le plugin `seo` de `vite.config.ts` écrit donc, à chaque build, un fichier
-HTML par page (`dist/chiens/roy/index.html`…) avec ses propres balises
+`scripts/prerender.mjs` écrit donc, à chaque build, un fichier HTML par
+page (`dist/chiens/roy/index.html`…) avec son contenu, ses propres balises
 `head`, ses données structurées JSON-LD, plus `sitemap.xml` et
 `robots.txt`. Vercel comme Netlify servent ces fichiers avant d'appliquer
 la redirection vers `index.html`, sans configuration supplémentaire.
 
-Le même plugin fait en sorte que `npm run preview` se comporte de la même
-façon : sans lui, le serveur de prévisualisation de Vite renverrait la
-page d'accueil pour toutes les URL profondes et le travail ne serait pas
-vérifiable en local. Pour contrôler une page, ouvrez son code source
+Le plugin `thedogmall:prerendered-preview` de `vite.config.ts` fait en
+sorte que `npm run preview` se comporte de la même façon : sans lui, le
+serveur de prévisualisation de Vite renverrait la page d'accueil pour
+toutes les URL profondes et le travail ne serait pas vérifiable en local. Pour contrôler une page, ouvrez son code source
 (`curl http://localhost:4173/chiens/roy` ou « Afficher la source » dans le
 navigateur) : le titre et les balises doivent être ceux de la page.
 
@@ -142,19 +142,42 @@ clairement ce qui s'est passé.
 
 ## Chargement
 
-L'accueil part avec le premier chargement ; les autres pages sont
-téléchargées à la demande (`lazy` de React Router, dans
-`src/router/index.tsx`). Ajouter des pages, des chiens ou des articles ne
-grossit donc plus l'arrivée sur le site.
+Le contenu de chaque page est écrit dans le HTML au moment du build
+(`scripts/prerender.mjs`) : le texte, les prix et les photos sont à
+l'écran avant même que le JavaScript soit téléchargé. Le navigateur
+reprend ensuite cette page au lieu de la reconstruire.
 
-Le gain immédiat reste modeste : environ 455 Ko de JavaScript sur
-l'accueil au lieu de 524 Ko, soit 145 Ko compressés au lieu de 154 Ko.
-L'essentiel du poids est React et React Router, nécessaires dès la
-première image.
+Mesuré sur une 3G lente simulée (400 kbit/s, 300 ms de latence), le texte
+s'affiche à **1,6 s** sur l'accueil et **1,8 s** sur une fiche chien, au
+lieu de 11,8 s et 10,8 s quand le navigateur devait tout construire —
+soit environ 85 % plus tôt. Le site reste entièrement lisible et
+navigable **sans JavaScript du tout**.
 
-Pendant qu'une page se télécharge, React Router garde la page précédente
-affichée ; à l'ouverture directe d'une URL, `PageLoading` montre l'en-tête,
-le pied de page et un squelette de contenu.
+Le JavaScript est par ailleurs découpé par route : ajouter des pages, des
+chiens ou des articles ne grossit pas l'arrivée sur le site. La page
+d'entrée est chargée avant la reprise du HTML (`src/router/index.tsx`),
+sinon React remplacerait la page affichée par un écran d'attente.
+
+### Comment le build est enchaîné
+
+```
+tsc -b                # typage
+vite build            # bundle du navigateur      → dist/
+vite build --ssr …    # bundle du générateur      → dist-ssr/
+node scripts/prerender.mjs   # écrit les pages    → dist/**/index.html
+```
+
+La dernière étape produit aussi `404.html` (coquille vide servie aux
+adresses inconnues), `sitemap.xml` et `robots.txt`.
+
+### Panier et favoris
+
+Ils sont relus depuis le `localStorage` **après** le premier rendu : les
+pages sont générées au build, où le `localStorage` n'existe pas, et partir
+du même état vide des deux côtés est ce qui permet au navigateur de
+reprendre la page telle quelle. Les pages qui décident quelque chose à
+partir du panier (`/panier`, `/commande`, `/favoris`) attendent le signal
+`isRestored` avant d'annoncer un panier vide ou de rediriger.
 
 ## Catalogue
 
@@ -195,8 +218,7 @@ enregistrés avant le passage au franc CFA sont ignorés (la clé
   sont conservés dans le `localStorage` de l'appareil.
 - Les coordonnées (téléphone, WhatsApp, email, adresse) sont centralisées
   dans `src/lib/contact.ts` : c'est le seul endroit à modifier.
-- Le contenu des pages est rendu par le navigateur : le HTML pré-généré ne
-  contient que les balises `head` et une page vide. Rendre aussi le corps
-  au build (rendu côté serveur statique) ferait apparaître le texte sans
-  attendre le JavaScript ; ce n'est pas fait, cela demanderait de revoir la
-  restauration du panier et des favoris depuis le `localStorage`.
+- Les adresses inconnues sont servies par la redirection de secours de
+  l'hébergeur, qui renvoie `404.html` avec un code 404 sur Netlify, mais
+  un code 200 sur Vercel (une réécriture ne peut pas changer le code). La
+  page affichée est la bonne dans les deux cas.

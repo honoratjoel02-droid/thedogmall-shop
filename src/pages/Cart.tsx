@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Minus, Plus, ShoppingBag, Trash } from "@phosphor-icons/react";
 
 import SiteLayout from "../components/site/SiteLayout";
+import PageLoading from "../components/site/PageLoading";
 import ProductImage from "../components/site/ProductImage";
 import WhatsAppButton from "../components/site/WhatsAppButton";
 import { buttonVariants } from "../components/ui/button";
@@ -12,7 +13,15 @@ import { cartMessage } from "../lib/whatsapp";
 import { pageMeta } from "../lib/seo";
 
 export default function Cart() {
-  const { items, updateQuantity, removeItem, subtotal } = useCart();
+  const { items, updateQuantity, removeItem, subtotal, isRestored } =
+    useCart();
+
+  // Le panier enregistré est relu après le premier rendu : annoncer un
+  // panier vide avant cela ferait clignoter la page de tout client qui en
+  // a un.
+  if (!isRestored) {
+    return <PageLoading meta={pageMeta("/panier")} />;
+  }
 
   if (items.length === 0) {
     return (

@@ -3,6 +3,7 @@ import { Heart } from "@phosphor-icons/react";
 
 import SiteLayout from "../components/site/SiteLayout";
 import PageHeader from "../components/site/PageHeader";
+import PageLoading from "../components/site/PageLoading";
 import DogCard from "../components/site/DogCard";
 import ProductCard from "../components/site/ProductCard";
 import { buttonVariants } from "../components/ui/button";
@@ -12,7 +13,11 @@ import { products } from "../data/products";
 import { pageMeta } from "../lib/seo";
 
 export default function Favorites() {
-  const { favorites, favoriteCount } = useFavorites();
+  const { favorites, favoriteCount, isRestored } = useFavorites();
+
+  if (!isRestored) {
+    return <PageLoading meta={pageMeta("/favoris")} />;
+  }
 
   const favoriteDogs = dogs.filter((dog) =>
     favorites.dogs.includes(dog.id)

@@ -1,3 +1,4 @@
+import type { PageMeta } from "../../lib/seo";
 import SiteLayout from "./SiteLayout";
 
 /**
@@ -5,9 +6,9 @@ import SiteLayout from "./SiteLayout";
  * le pied de page et la barre d'onglets sont déjà là : seule la zone de
  * contenu est remplacée, ce qui évite un écran blanc.
  */
-export default function PageLoading() {
+export default function PageLoading({ meta }: { meta?: PageMeta }) {
   return (
-    <SiteLayout>
+    <SiteLayout meta={meta}>
       <div
         aria-busy="true"
         aria-live="polite"

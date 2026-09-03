@@ -40,10 +40,26 @@ const stateKeys: Record<FavoriteKind, keyof FavoritesState> = {
 };
 
 export function FavoritesProvider({ children }: { children: ReactNode }) {
-  const [favorites, setFavorites] =
-    useState<FavoritesState>(readStoredFavorites);
+  const [favorites, setFavorites] = useState<FavoritesState>(emptyFavorites);
+  const [restored, setRestored] = useState(false);
+
+  /*
+   * Relus après le premier rendu, pour la même raison que le panier : les
+   * pages sont générées au build, sans `localStorage`.
+   */
+  useEffect(() => {
+    // Lire pendant le rendu casserait la reprise du HTML généré au
+    // build, qui ne connaît pas le localStorage.
+    // oxlint-disable-next-line react/set-state-in-effect
+    setFavorites(readStoredFavorites());
+    setRestored(true);
+  }, []);
 
   useEffect(() => {
+    // Tant que les favoris enregistrés n'ont pas été lus, les écrire les
+    // effacerait.
+    if (!restored) return;
+
     try {
       localStorage.setItem(
         FAVORITES_STORAGE_KEY,
@@ -53,7 +69,7 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
       // localStorage indisponible (navigation privée, quota) : les favoris
       // restent valables le temps de la visite.
     }
-  }, [favorites]);
+  }, [favorites, restored]);
 
   const isFavorite = useCallback(
     (kind: FavoriteKind, id: string) =>
@@ -76,7 +92,13 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
 
   return (
     <FavoritesContext.Provider
-      value={{ favorites, isFavorite, toggleFavorite, favoriteCount }}
+      value={{
+        favorites,
+        isFavorite,
+        toggleFavorite,
+        favoriteCount,
+        isRestored: restored,
+      }}
     >
       {children}
     </FavoritesContext.Provider>
