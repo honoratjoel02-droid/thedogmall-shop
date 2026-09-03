@@ -9,6 +9,11 @@ Le site est pensé mobile d'abord : navigation par barre d'onglets fixe
 en bas de l'écran sur téléphone, menu latéral pour le reste, puis
 navigation horizontale classique à partir de 1024 px.
 
+> **Avant la première mise en ligne**, suivez
+> [`LANCEMENT.md`](LANCEMENT.md) : coordonnées, nom de domaine, mentions
+> légales, catalogue et conditions de livraison sont encore remplis avec
+> des valeurs d'exemple.
+
 ## Pages
 
 | URL | Contenu |
