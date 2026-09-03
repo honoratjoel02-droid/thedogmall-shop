@@ -8,6 +8,7 @@ import {
 } from "@phosphor-icons/react";
 
 import PageLoading from "../components/site/PageLoading";
+import WhatsAppButton from "../components/site/WhatsAppButton";
 import SiteLayout from "../components/site/SiteLayout";
 import { Button, buttonVariants } from "../components/ui/button";
 import { Card, CardContent } from "../components/ui/card";
@@ -357,13 +358,24 @@ export default function Checkout() {
             </p>
 
             {status === "error" && (
-              <p
+              <div
                 role="alert"
-                className="flex items-start gap-2 rounded-xl bg-destructive/10 p-3 text-sm text-destructive"
+                className="flex flex-col gap-3 rounded-xl bg-destructive/10 p-3"
               >
-                <Warning size={17} className="mt-0.5 shrink-0" />
-                {failure}
-              </p>
+                <p className="flex items-start gap-2 text-sm text-destructive">
+                  <Warning size={17} className="mt-0.5 shrink-0" />
+                  {failure}
+                </p>
+
+                {/* La commande est saisie : elle ne doit pas être perdue
+                    parce que le service est en panne. */}
+                <WhatsAppButton
+                  size="sm"
+                  className="w-fit"
+                  label="Envoyer la commande sur WhatsApp"
+                  message={orderMessage(values, items, subtotal)}
+                />
+              </div>
             )}
 
             <Button

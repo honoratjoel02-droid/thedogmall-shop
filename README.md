@@ -127,10 +127,14 @@ s'en charge et vous transmet chaque envoi par email :
 cp .env.example .env.local   # puis collez votre URL dans VITE_FORM_ENDPOINT
 ```
 
-Formspree et Web3Forms sont gratuits et fonctionnent sans code : vous
-créez un formulaire, vous copiez l'URL fournie. Pensez à ajouter la même
-variable chez votre hébergeur (Vercel : Settings → Environment
-Variables), sinon le site en ligne ne l'aura pas.
+Formspree et Web3Forms sont gratuits et fonctionnent sans code. Formspree
+ne demande que l'URL du formulaire ; Web3Forms demande en plus une clé,
+à mettre dans `VITE_FORM_ACCESS_KEY`. Les deux cas sont détaillés dans
+`.env.example`.
+
+Pensez à ajouter les mêmes variables chez votre hébergeur (Vercel :
+Settings → Environment Variables) et à redéployer, sinon le site en ligne
+ne les aura pas.
 
 **Tant que la variable est vide**, rien ne casse et rien ne ment :
 
@@ -143,7 +147,9 @@ Variables), sinon le site en ligne ne l'aura pas.
 
 Les trois formulaires valident leurs champs, affichent les erreurs sous
 le champ concerné, gardent la saisie en cas d'échec et signalent
-clairement ce qui s'est passé.
+clairement ce qui s'est passé. Si le service tombe en panne ou devient
+injoignable, un bouton propose d'envoyer le message ou la commande sur
+WhatsApp plutôt que de perdre la saisie.
 
 ## Chargement
 
